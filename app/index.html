@@ -12,6 +12,7 @@
   --bg:#cdd2d5; --panel:#e3e6e8; --panel2:#f2f4f5; --ink:#1e2428; --muted:#58626a;
   --line:#a6aeb4; --equip:#454e55; --pipe:#7a848b; --water:#246fa6; --water-soft:#b5cfe3;
   --alarm:#c2352a; --warn:#b98a00; --grid:#b8bfc4; --tankbg:#eef1f2; --sel:#17558a; --on-acc:#ffffff; --led:#2f9e44;
+  --k-gr:#c3c8cb; --k-pe:#3f9b3a; --k-n:#3d7fc4; --k-si:#3a3f43; --k-end:#5d666c; --k-mark:#f7f7f2; --lcd:#9fb59a;
   --rack:#3a4247; --rackslot:#5d676e; --rackink:#a3acb2; --mod:#e8ebed; --c-pwr:#a8543a; --c-cpu:#2c6ea3; --c-com:#6a5aa8; --c-io:#5f7f3e;
   --plate:#c4cace; --plate-edge:#9ba3a9; --plate-hi:#e9ecee; --rail:#dde1e3; --duct:#aab1b6; --dev:#f4f5f6; --dev-dk:#3b4349; --dev-edge:#707a80; --dev-ink:#1f2529; --dev-mut:#5a646b; --screw:#b9c0c4;
   --f-ui:"IBM Plex Sans Condensed","Segoe UI","Arial Narrow",Arial,sans-serif;
@@ -21,12 +22,14 @@
   --bg:#1b1f22; --panel:#252a2e; --panel2:#2d3337; --ink:#d9dee1; --muted:#97a1a8;
   --line:#3d454b; --equip:#9aa4ab; --pipe:#6c767d; --water:#4ba0dc; --water-soft:#20425c;
   --alarm:#e5574b; --warn:#e0b232; --grid:#2c3337; --tankbg:#22282c; --sel:#6cb4ea; --on-acc:#0f1418; --led:#4cc95e;
+  --k-gr:#b4babe; --k-pe:#3a8f36; --k-n:#3a78ba; --k-si:#2c3135; --k-end:#3d454b; --k-mark:#eceee8; --lcd:#7f9a7a;
   --rack:#101315; --rackslot:#353d43; --rackink:#7f8a91; --mod:#3a4248; --c-pwr:#d07a5c; --c-cpu:#5aa0d8; --c-com:#9a8ad6; --c-io:#8fb06a;
   --plate:#6f787e; --plate-edge:#535b61; --plate-hi:#9ea6ab; --rail:#8d959a; --duct:#5d666c; --dev:#d9dde0; --dev-dk:#262c30; --dev-edge:#4e575d; --dev-ink:#1f2529; --dev-mut:#4f585e; --screw:#a1a9ae; color-scheme:dark}}
 :root[data-theme="dark"]{
   --bg:#1b1f22; --panel:#252a2e; --panel2:#2d3337; --ink:#d9dee1; --muted:#97a1a8;
   --line:#3d454b; --equip:#9aa4ab; --pipe:#6c767d; --water:#4ba0dc; --water-soft:#20425c;
   --alarm:#e5574b; --warn:#e0b232; --grid:#2c3337; --tankbg:#22282c; --sel:#6cb4ea; --on-acc:#0f1418; --led:#4cc95e;
+  --k-gr:#b4babe; --k-pe:#3a8f36; --k-n:#3a78ba; --k-si:#2c3135; --k-end:#3d454b; --k-mark:#eceee8; --lcd:#7f9a7a;
   --rack:#101315; --rackslot:#353d43; --rackink:#7f8a91; --mod:#3a4248; --c-pwr:#d07a5c; --c-cpu:#5aa0d8; --c-com:#9a8ad6; --c-io:#8fb06a;
   --plate:#6f787e; --plate-edge:#535b61; --plate-hi:#9ea6ab; --rail:#8d959a; --duct:#5d666c; --dev:#d9dde0; --dev-dk:#262c30; --dev-edge:#4e575d; --dev-ink:#1f2529; --dev-mut:#4f585e; --screw:#a1a9ae; color-scheme:dark}
 
@@ -124,6 +127,7 @@ button{cursor:pointer}
 /* Eigenschaften */
 .props{grid-area:props;border-left:1px solid var(--line);padding-right:max(16px,env(safe-area-inset-right,0px));padding-left:16px}
 .pp{background:var(--panel);overflow:auto;padding-block:14px;display:flex;flex-direction:column;gap:12px}
+.pp>*{flex-shrink:0}
 .pp h2{margin:0;font-size:17px;font-weight:600;text-wrap:balance}
 .kind{font-size:10.5px;color:var(--muted);text-transform:uppercase;letter-spacing:.09em;font-weight:600}
 .fld{display:grid;grid-template-columns:1fr 92px;align-items:center;gap:8px}
@@ -170,7 +174,10 @@ input[type=range]{width:100%;accent-color:var(--water)}
   .palette{flex-direction:row;flex-wrap:wrap;align-items:center;border-right:0;border-bottom:1px solid var(--line);
     padding-block:8px;padding-right:max(16px,env(safe-area-inset-right,0px));padding-left:max(16px,env(safe-area-inset-left,0px))}
   .palette .ph,.palette .hint{display:none}
-  .tgroup{flex-direction:row;flex-wrap:wrap}
+  .palette{flex-wrap:nowrap;overflow-x:auto}
+  .tgroup{flex-direction:row;flex-wrap:nowrap;flex:none}
+  .palette .tool,.palette .btn{flex:none}
+  .palette .zoom{flex:none}
   .tool{padding:5px 8px}
   .tool small{display:none}
   .props{border-left:0;border-top:1px solid var(--line);max-height:32vh;padding-left:max(16px,env(safe-area-inset-left,0px))}
@@ -188,7 +195,7 @@ input[type=range]{width:100%;accent-color:var(--water)}
 .tabs{display:inline-flex;gap:2px;background:var(--panel2);border:1px solid var(--line);border-radius:4px;padding:2px}
 .tabs button{border:0;background:none;padding:5px 12px;border-radius:3px;font-size:13px}
 .tabs button[aria-selected="true"]{background:var(--equip);color:var(--panel2)}
-.stbody{display:grid;grid-template-columns:210px minmax(0,1fr) 330px;min-height:0}
+.stbody{display:grid;grid-template-columns:236px minmax(0,1fr) 340px;min-height:0}
 .stpal{background:var(--panel);border-right:1px solid var(--line);overflow:auto;display:flex;flex-direction:column;gap:10px;
   padding-block:14px;padding-left:max(14px,env(safe-area-inset-left,0px));padding-right:14px}
 .stwork{position:relative;min-width:0;min-height:0;overflow:auto}
@@ -197,6 +204,8 @@ input[type=range]{width:100%;accent-color:var(--water)}
 .fld .in select{width:100%;min-width:0;border:0;background:none;padding:4px 6px;font-size:13px}
 .fld.wide select{width:100%;border:1px solid var(--line);border-radius:4px;background:var(--panel2);padding:5px 6px}
 .chk{display:flex;gap:8px;align-items:center;font-size:13px}
+.svrow{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;font-size:12.5px}
+.svrow span{min-width:0}
 .tblw{overflow-x:auto}
 .tbl{width:100%;border-collapse:collapse;font-size:11.5px}
 .tbl th{text-align:left;font-weight:600;color:var(--muted);font-size:10px;text-transform:uppercase;letter-spacing:.06em;padding:4px}
@@ -278,6 +287,15 @@ input[type=range]{width:100%;accent-color:var(--water)}
 .ground{stroke:var(--equip);stroke-width:1.5;stroke-dasharray:3 2}
 .casing{fill:var(--panel2);stroke:var(--equip);stroke-width:1.5}
 .leds i.on{background:var(--led)}
+.kt{fill:var(--k-gr);stroke:var(--dev-edge);stroke-width:.8} .kt.pe{fill:var(--k-pe)} .kt.n{fill:var(--k-n)} .kt.si{fill:var(--k-si)}
+.kt.tsel{stroke:var(--sel);stroke-width:2.4}
+.kmark{fill:var(--k-mark);stroke:var(--dev-edge);stroke-width:.4;pointer-events:none}
+.kno{font:600 6.6px var(--f-mono);fill:#1f2529;pointer-events:none}
+.kend{fill:var(--k-end)}
+.kbr{stroke:#c8302a;stroke-width:3;stroke-linecap:round;pointer-events:none}
+.lcd{fill:var(--lcd);stroke:var(--dev-edge);stroke-width:.6}
+.stpal input[type=search]{width:100%;border:1px solid var(--line);border-radius:4px;background:var(--panel2);padding:5px 8px}
+.btn:disabled{opacity:.45;cursor:default}
 @media (prefers-reduced-motion: reduce){.water{stroke-dasharray:none}}
 </style>
 </head>
@@ -305,7 +323,18 @@ input[type=range]{width:100%;accent-color:var(--water)}
   </header>
 
   <aside class="palette" aria-label="Bausteine">
-    <div class="ph">Bausteine</div>
+    <div class="ph">Gewinnung</div>
+    <div class="tgroup">
+      <div class="tool" data-type="brunnen" title="Ins Prozessbild ziehen oder antippen">
+        <svg width="34" height="32" viewBox="0 0 34 32" aria-hidden="true"><line x1="1" y1="9" x2="33" y2="9" style="stroke:var(--equip);stroke-width:1.5;stroke-dasharray:3 2"/><rect x="12" y="3" width="10" height="27" style="fill:var(--panel2);stroke:var(--equip);stroke-width:1.5"/><rect x="13" y="15" width="8" height="14" style="fill:var(--water-soft)"/><circle cx="17" cy="25" r="3" style="fill:var(--water)"/></svg>
+        <div><b>Tiefbrunnen</b><small>fördert Grundwasser</small></div>
+      </div>
+      <div class="tool" data-type="quelle" title="Ins Prozessbild ziehen oder antippen">
+        <svg width="34" height="32" viewBox="0 0 34 32" aria-hidden="true"><path d="M3 30 V12 Q17 0 31 12 V30 Z" style="fill:var(--tankbg);stroke:var(--equip);stroke-width:2"/><rect x="4" y="18" width="26" height="11" style="fill:var(--water-soft)"/><path d="M17 27 V20 M14 23 L17 20 L20 23" style="fill:none;stroke:var(--water);stroke-width:1.6"/></svg>
+        <div><b>Wasserquelle</b><small>Quellfassung, freier Zulauf</small></div>
+      </div>
+    </div>
+    <div class="ph">Speichern und Fördern</div>
     <div class="tgroup">
       <div class="tool" data-type="hb" title="Ins Prozessbild ziehen oder antippen">
         <svg width="34" height="32" viewBox="0 0 34 32" aria-hidden="true"><rect x="3" y="2" width="28" height="28" rx="2" style="fill:var(--tankbg);stroke:var(--equip);stroke-width:2"/><rect x="4" y="14" width="26" height="15" style="fill:var(--water-soft)"/><line x1="4" y1="14" x2="30" y2="14" style="stroke:var(--water);stroke-width:2"/></svg>
@@ -315,13 +344,16 @@ input[type=range]{width:100%;accent-color:var(--water)}
         <svg width="34" height="32" viewBox="0 0 34 32" aria-hidden="true"><circle cx="17" cy="16" r="13" style="fill:var(--tankbg);stroke:var(--equip);stroke-width:2"/><polygon points="10,9 10,23 30,16" style="fill:var(--equip)"/></svg>
         <div><b>Pumpwerk</b><small>fördert in Hochbehälter</small></div>
       </div>
-      <div class="tool" data-type="brunnen" title="Ins Prozessbild ziehen oder antippen">
-        <svg width="34" height="32" viewBox="0 0 34 32" aria-hidden="true"><line x1="1" y1="9" x2="33" y2="9" style="stroke:var(--equip);stroke-width:1.5;stroke-dasharray:3 2"/><rect x="12" y="3" width="10" height="27" style="fill:var(--panel2);stroke:var(--equip);stroke-width:1.5"/><rect x="13" y="15" width="8" height="14" style="fill:var(--water-soft)"/><circle cx="17" cy="25" r="3" style="fill:var(--water)"/></svg>
-        <div><b>Tiefbrunnen</b><small>fördert Grundwasser</small></div>
+      <div class="tool" data-type="dea" title="Ins Prozessbild ziehen oder antippen">
+        <svg width="34" height="32" viewBox="0 0 34 32" aria-hidden="true"><rect x="2" y="4" width="30" height="24" rx="3" style="fill:var(--tankbg);stroke:var(--equip);stroke-width:2"/><circle cx="11" cy="11" r="4.5" style="fill:var(--equip)"/><circle cx="11" cy="21" r="4.5" style="fill:var(--equip)"/><text x="23.5" y="19" text-anchor="middle" style="font:600 7px var(--f-mono);fill:var(--ink)">bar</text></svg>
+        <div><b>Druckerhöhungsanlage</b><small>versorgt eine Druckzone</small></div>
       </div>
-      <div class="tool" data-type="quelle" title="Ins Prozessbild ziehen oder antippen">
-        <svg width="34" height="32" viewBox="0 0 34 32" aria-hidden="true"><path d="M3 30 V12 Q17 0 31 12 V30 Z" style="fill:var(--tankbg);stroke:var(--equip);stroke-width:2"/><rect x="4" y="18" width="26" height="11" style="fill:var(--water-soft)"/><path d="M17 27 V20 M14 23 L17 20 L20 23" style="fill:none;stroke:var(--water);stroke-width:1.6"/></svg>
-        <div><b>Wasserquelle</b><small>Quellfassung, freier Zulauf</small></div>
+    </div>
+    <div class="ph">Netz und Armaturen</div>
+    <div class="tgroup">
+      <div class="tool" data-type="schacht" title="Ins Prozessbild ziehen oder antippen">
+        <svg width="34" height="32" viewBox="0 0 34 32" aria-hidden="true"><rect x="3" y="7" width="28" height="23" rx="1" style="fill:var(--tankbg);stroke:var(--equip);stroke-width:2"/><rect x="11" y="2" width="12" height="5" style="fill:var(--equip)"/><line x1="3" y1="21" x2="31" y2="21" style="stroke:var(--pipe);stroke-width:3"/><polygon points="11,16 11,26 17,21" style="fill:var(--water)"/><polygon points="23,16 23,26 17,21" style="fill:var(--water)"/></svg>
+        <div><b>Schieberschacht</b><small>Knoten mit Schiebern</small></div>
       </div>
       <div class="tool" data-type="klappe" title="Auf eine Leitung ziehen">
         <svg width="34" height="32" viewBox="0 0 34 32" aria-hidden="true"><line x1="1" y1="16" x2="33" y2="16" style="stroke:var(--pipe);stroke-width:4"/><polygon points="7,8 7,24 17,16" style="fill:var(--water);stroke:var(--water)"/><polygon points="27,8 27,24 17,16" style="fill:var(--water);stroke:var(--water)"/></svg>
@@ -337,7 +369,7 @@ input[type=range]{width:100%;accent-color:var(--water)}
       <button class="btn" id="bConnect" aria-pressed="false">Verbinden</button>
       <div class="zoom"><button class="btn" id="bZoomOut" aria-label="Verkleinern">−</button><button class="btn" id="bFit">Einpassen</button><button class="btn" id="bZoomIn" aria-label="Vergrößern">+</button></div>
     </div>
-    <p class="hint">Bausteine ins Bild ziehen. Klappen und Zähler auf eine Leitung ziehen. Leitungen vom dunklen Anschluss rechts am Objekt zum Ziel ziehen, oder „Verbinden“ wählen und erst Quelle, dann Ziel antippen. Entf löscht die Auswahl.</p>
+    <p class="hint">Bausteine ins Bild ziehen. Klappen und Zähler auf eine Leitung ziehen, Zähler auch an einen Hochbehälter oder eine Druckerhöhungsanlage. Leitungen vom dunklen Anschluss rechts am Objekt zum Ziel ziehen, oder „Verbinden“ wählen und erst Quelle, dann Ziel antippen. Entf löscht die Auswahl.</p>
   </aside>
 
   <main class="stage">
@@ -383,6 +415,7 @@ input[type=range]{width:100%;accent-color:var(--water)}
 
 <script>
 (()=>{
+document.documentElement.lang='de';
 const $=s=>document.querySelector(s);
 const svg=$('#scene'), world=$('#world');
 const KEY='leitwarte-wasser-v3';
@@ -403,8 +436,8 @@ function exampleState(){
 
   const pwT=add({type:'brunnen',name:'Br Talaue 1',x:140,y:300,q:100,mode:'auto',on:45,off:92,run:true,ergieb:120,ruhe:8.5,absenk:6,tiefe:85});
   pwT.pumps=[pump('P1','uwp','grund',100,62,22,43)];
-  const br2=add({type:'brunnen',name:'Br Talaue 2',x:140,y:480,q:70,mode:'auto',on:35,off:85,run:false,ergieb:80,ruhe:11,absenk:9,tiefe:110});
-  br2.pumps=[pump('P1','uwp','grund',70,70,18.5,36)];
+  const br2=add({type:'brunnen',name:'Br Talaue 2',x:140,y:480,q:80,mode:'auto',on:35,off:85,run:false,ergieb:80,ruhe:11,absenk:9,tiefe:110});
+  br2.pumps=[pump('P1','uwp','grund',80,70,18.5,36)];
   const qB=add({type:'quelle',name:'Quelle Buchenhang',x:140,y:110,cap:60,v:45,sch:22});
   const hbK=add({type:'hb',name:'HB Kirchberg',x:380,y:300,cap:2000,v:1300,demand:70,lo:20,hi:96});
   hbK.rack.mods=[mod('ps',0),mod('cpu',2,null,{ip:'10.20.1.11',proto:'IEC 60870-5-104',asdu:11}),mod('com',4),
@@ -415,35 +448,60 @@ function exampleState(){
     mDI=mod('di16',5,['P1 Betrieb','P1 Störung','P2 Betrieb','P2 Störung','Tür offen','Netzausfall'],{addr:200}),
     mDO=mod('do8',6,['P1 Ein','P2 Ein'],{addr:300}),mAI=mod('ai8',7,['Druck Druckseite','Füllstand Saugseite'],{addr:100});
   pwK.rack.mods=[mPS,mCPU,mCOM,mDI,mDO,mAI];
-  const Q0=part('hs','-Q0',90,180,{desc:'Einspeisung'}),F1=part('ls','-F1',150,180,{desc:'Absicherung Netzteil'}),T1=part('nt','-T1',220,180),
-    K1=part('relais','-K1',290,180,{desc:'Koppelrelais P1 Ein'}),K2=part('relais','-K2',335,180,{desc:'Koppelrelais P2 Ein'}),
-    X1=part('leiste','-X1',470,180,{desc:'24 V DC Verteilung'}),A1=part('rtu','-A1',300,430,{desc:'Fernwirkstation'}),
+  const T=(typ,mm,extra)=>Object.assign({id:id('t'),typ,nr:'',mm:mm||(typ==='pe'?'4':'2,5'),br:false,fuse:typ==='si'?'2 A':''},extra||{});
+  const KP=(X,i,side,k)=>X.terms[i].id+':'+(side||'t')+(k||0);
+  const Q0=part('hs','-Q0',75,180,{desc:'Einspeisung'}),F0=part('spd','-F0',144,180,{desc:'Überspannungsschutz Einspeisung'}),
+    F1=part('ls','-F1',197,180,{desc:'Absicherung Netzteil'}),T1=part('nt','-T1',245,180,{desc:'Steuerspannung 24 V DC'}),
+    G1=part('usv','-G1',311,180,{desc:'Pufferung Fernwirktechnik'}),K1=part('relais','-K1',362,180,{desc:'Koppelrelais P1 Ein'}),
+    K2=part('relais','-K2',402,180,{desc:'Koppelrelais P2 Ein'}),K3=part('pwach','-K3',446,180,{desc:'Phasenüberwachung Einspeisung'}),
+    E1=part('heiz','-E1',800,180,{desc:'Schrankheizung'}),B2=part('thermo','-B2',750,180,{desc:'Thermostat Heizung'}),
+    A1=part('rtu','-A1',300,430,{desc:'Fernwirkstation'}),
+    H1=part('lm','-H1',560,430,{desc:'Sammelstörung',col:'rt'}),S1=part('wahl','-S1',602,430,{desc:'Betriebsart P1'}),S2=part('wahl','-S2',646,430,{desc:'Betriebsart P2'}),
     Q1=part('mss','-Q1',100,680,{desc:'Motorschutz P1'}),Q2=part('schuetz','-Q2',180,680,{desc:'Netzschütz P1'}),
     B1=part('mu','-B1',260,680,{desc:'Druck Druckseite',range:'0–10',unit:'bar'}),
-    Q3=part('mss','-Q3',340,680,{desc:'Motorschutz P2'}),Q4=part('schuetz','-Q4',420,680,{desc:'Netzschütz P2'});
-  pwK.cab.parts=[Q0,F1,T1,K1,K2,X1,A1,Q1,Q2,B1,Q3,Q4];
+    Q3=part('mss','-Q3',340,680,{desc:'Motorschutz P2'}),Q4=part('schuetz','-Q4',420,680,{desc:'Netzschütz P2'}),
+    F3=part('ptc','-F3',490,680,{desc:'Kaltleiterauswertung P1'}),F4=part('ptc','-F4',540,680,{desc:'Kaltleiterauswertung P2'}),
+    K4=part('nivr','-K4',610,680,{desc:'Trockenlaufschutz Saugbehälter'}),
+    X1=part('kl','-X1',190,930,{desc:'Steuerspannung 24 V DC und Signale',tech:'Push-in',num:'fort',start:1,
+      terms:[T('dg','2,5',{br:true}),T('dg','2,5',{br:true}),T('dg','2,5',{br:true}),T('dg'),T('dg','2,5',{br:true}),T('dg','2,5',{br:true}),T('dg','2,5',{br:true}),T('dg'),T('tr'),T('tr'),T('si'),T('ini'),T('pe')]}),
+    X2=part('kl','-X2',470,930,{desc:'Motorabgänge P1 und P2',tech:'Push-in',num:'pen',start:1,
+      terms:[T('dg','4'),T('dg','4'),T('dg','4'),T('pe','4'),T('dg','4'),T('dg','4'),T('dg','4'),T('pe','4'),T('ds','2,5'),T('ds','2,5')]});
+  pwK.cab.anl='WV.PW02';pwK.cab.ort='SK1';
+  pwK.cab.parts=[Q0,F0,F1,T1,G1,K1,K2,K3,B2,E1,A1,H1,S1,S2,Q1,Q2,B1,Q3,Q4,F3,F4,K4,X1,X2];
   pwK.cab.wires=[W(Q0,'b0',F1,'t0','bn','2,5','L1'),W(F1,'b0',T1,'t0','bn','1,5','L1'),
-    W(T1,'b0',X1,'t0','db','1,5','24V+'),W(T1,'b2',X1,'t1','db','1,5','0V'),
-    W(X1,'b0',A1,mPS.id+':b0','db','1,0','24V+'),W(X1,'b1',A1,mPS.id+':b1','db','1,0','0V'),
+    W(T1,'b0',X1,KP(X1,0),'db','1,5','24V+'),W(T1,'b2',X1,KP(X1,4),'db','1,5','0V'),
+    W(X1,KP(X1,1),A1,mPS.id+':b0','db','1,0','24V+'),W(X1,KP(X1,5),A1,mPS.id+':b1','db','1,0','0V'),
     W(A1,mDO.id+':b0',K1,'t0','db','0,75','P1 Ein'),W(A1,mDO.id+':b1',K2,'t0','db','0,75','P2 Ein'),
-    W(K1,'b0',X1,'t2','db','0,75','0V'),W(K2,'b0',X1,'t3','db','0,75','0V'),
+    W(K1,'b0',X1,KP(X1,6),'db','0,75','0V'),W(K2,'b0',X1,KP(X1,7),'db','0,75','0V'),
     W(K1,'b2',Q2,'t0','rt','0,75','P1 Ein 230 V'),W(K2,'b2',Q4,'t0','rt','0,75','P2 Ein 230 V'),
-    W(B1,'b0',A1,mAI.id+':b0','db','0,75','Druck'),W(B1,'t0',X1,'t4','db','0,75','24V+'),
+    W(B1,'b0',X1,KP(X1,8),'db','0,75','Druck I+'),W(X1,KP(X1,8,'b'),A1,mAI.id+':b0','db','0,75','Druck'),W(B1,'t0',X1,KP(X1,2),'db','0,75','24V+'),
     W(Q1,'b0',Q2,'t1','sw','2,5'),W(Q1,'b1',Q2,'t2','sw','2,5'),W(Q1,'b2',Q2,'t3','sw','2,5'),
-    W(Q3,'b0',Q4,'t1','sw','2,5'),W(Q3,'b1',Q4,'t2','sw','2,5'),W(Q3,'b2',Q4,'t3','sw','2,5')];
-  const hbH=add({type:'hb',name:'HB Hohe Warte',x:860,y:170,cap:600,v:330,demand:35,lo:20,hi:96});
+    W(Q3,'b0',Q4,'t1','sw','2,5'),W(Q3,'b1',Q4,'t2','sw','2,5'),W(Q3,'b2',Q4,'t3','sw','2,5'),
+    W(Q2,'b1',X2,KP(X2,0),'sw','2,5','P1 U'),W(Q2,'b2',X2,KP(X2,1),'sw','2,5','P1 V'),W(Q2,'b3',X2,KP(X2,2),'sw','2,5','P1 W'),
+    W(Q4,'b1',X2,KP(X2,4),'sw','2,5','P2 U'),W(Q4,'b2',X2,KP(X2,5),'sw','2,5','P2 V'),W(Q4,'b3',X2,KP(X2,6),'sw','2,5','P2 W'),
+    W(F3,'t1',X2,KP(X2,8,'t',0),'db','0,75','P1 PTC'),W(F4,'t1',X2,KP(X2,9,'t',0),'db','0,75','P2 PTC')];
+  const hbH=add({type:'hb',name:'HB Hohe Warte',x:860,y:170,cap:800,v:520,demand:30,lo:20,hi:96});
+  const ssM=add({type:'schacht',name:'SS Mühlweg',x:1090,y:300,sch:{},flut:false});
+  ssM.rack.mods=[mod('ps',0),mod('cpu',2,null,{ip:'10.20.1.31',proto:'IEC 60870-5-104',asdu:31}),mod('com',4),mod('di16',5,['Überflutung','Schachtdeckel offen','Einbruch','Netzausfall'],{addr:200})];
+  const deaS=add({type:'dea',name:'DEA Sonnenhang',x:1330,y:190,demand:16,soll:4.5,q:40,mode:'auto'});
+  deaS.pumps=[pump('D1','dea','grund',14,35,3,6.5,'Frequenzumrichter'),pump('D2','dea','spitze',14,35,3,6.5,'Frequenzumrichter'),pump('D3','dea','reserve',14,35,3,6.5,'Frequenzumrichter')];
+  const hbW=add({type:'hb',name:'HB Waldsiedlung',x:1340,y:460,cap:400,v:240,demand:12,lo:20,hi:96});
   const hbL=add({type:'hb',name:'HB Lindenhof',x:620,y:440,cap:900,v:610,demand:40,lo:20,hi:96});
   hbL.pumps=[pump('D1','dea','grund',40,30,5.5,11,'Frequenzumrichter'),pump('D2','dea','spitze',40,30,5.5,11,'Frequenzumrichter')];
   const link=(a,b,q)=>{const l={id:id('l'),from:a.id,to:b.id,q:q||80};s.links.push(l);return l};
   const lT=link(pwT,hbK); link(br2,hbK); link(qB,hbK,40); link(hbK,pwK); link(pwK,hbH); const lF=link(hbK,hbL,60);
+  const lM=link(hbH,ssM,90), lD=link(ssM,deaS,90), lW=link(ssM,hbW,30); ssM.sch={[lM.id]:1,[lD.id]:1,[lW.id]:1};
   const [kDI,kDO,kCNT]=[hbK.rack.mods[4],hbK.rack.mods[5],hbK.rack.mods[6]];
   s.items=[
     {id:id('k'),kind:'klappe',name:'K1',link:lF.id,pos:.55,dn:200,t:60,open:1,cmd:null,mode:'auto',rtu:hbK.id,doAuf:kDO.id+':0',doZu:kDO.id+':1',diAuf:kDI.id+':4',diZu:kDI.id+':5',ctl:{hb:hbL.id,on:70,off:95},stoer:false},
     {id:id('z'),kind:'zaehler',name:'WZ1',link:lT.id,pos:.3,bauart:'MID',dn:200,total:184230,imp:1,rtu:hbK.id,cnt:kCNT.id+':0'},
     {id:id('z'),kind:'zaehler',name:'WZ3',link:lF.id,pos:.85,bauart:'Ultraschall',dn:150,total:52810,imp:1,rtu:hbK.id,cnt:kCNT.id+':1'},
-    {id:id('z'),kind:'zaehler',name:'WZ2',node:hbL.id,pos:.5,bauart:'Woltmann',dn:150,total:96400,imp:1,rtu:'',cnt:''}];
-  return s;
+    {id:id('z'),kind:'zaehler',name:'WZ2',node:hbL.id,pos:.5,bauart:'Woltmann',dn:150,total:96400,imp:1,rtu:'',cnt:''},
+    {id:id('z'),kind:'zaehler',name:'WZ4',node:deaS.id,pos:.5,bauart:'MID',dn:100,total:31250,imp:1,rtu:'',cnt:''},
+    {id:id('z'),kind:'zaehler',name:'WZ5',link:lW.id,pos:.6,bauart:'Woltmann',dn:100,total:18820,imp:1,rtu:'',cnt:''}];
+  return normalize(s);
 }
+
 function emptyState(){return {nodes:[],links:[],t:6*60,seq:1,view:{x:0,y:0,k:1},speed:S?S.speed:1,sel:null,items:[]}}
 function load(){
   try{const raw=localStorage.getItem(KEY); if(raw){const s=JSON.parse(raw); if(valid(s)) return s;}}catch(e){}
@@ -453,6 +511,8 @@ function valid(s){return s&&Array.isArray(s.nodes)&&Array.isArray(s.links)}
 function normalize(s){
   s.seq=s.seq||1; s.t=s.t||360; s.view=s.view||{x:0,y:0,k:1}; s.speed=s.speed??1; s.sel=null;
   for(const n of s.nodes){ if(n.type==='hb'){n.cap=+n.cap||1000;n.v=Math.min(n.cap,Math.max(0,+n.v||0));n.demand=+n.demand||0;n.lo=n.lo??20;n.hi=n.hi??96;}
+    else if(n.type==='dea'){n.demand=+n.demand||0;n.soll=+n.soll||4;n.q=+n.q||40;n.mode=['auto','hand','aus'].includes(n.mode)?n.mode:'auto';n.run=false;}
+    else if(n.type==='schacht'){n.sch=n.sch&&typeof n.sch==='object'?n.sch:{};n.flut=!!n.flut;}
     else if(n.type==='quelle'){n.cap=+n.cap||60;n.v=Math.min(n.cap,Math.max(0,+n.v||0));n.sch=+n.sch||0;}
     else {n.q=+n.q||100;n.mode=n.mode||'auto';n.on=n.on??40;n.off=n.off??90;n.run=!!n.run;
       if(n.type==='brunnen'){n.ergieb=+n.ergieb||80;n.ruhe=+n.ruhe||10;n.absenk=+n.absenk||5;n.tiefe=+n.tiefe||100;}}
@@ -462,21 +522,24 @@ function normalize(s){
   return s;
 }
 let saveT=0;
-function save(){try{const {sel,...rest}=S;localStorage.setItem(KEY,JSON.stringify(rest,(k,v)=>['qin','qout','flow','fault','over','qd','act','qm','ab','wsp','overErg'].includes(k)?undefined:v));}catch(e){}}
+function save(){try{const {sel,...rest}=S;localStorage.setItem(KEY,JSON.stringify(rest,(k,v)=>['qin','qout','flow','fault','over','qd','act','qm','ab','wsp','overErg','pdr','qbed','_bad'].includes(k)?undefined:v));}catch(e){}}
 
 const byId=id=>S.nodes.find(n=>n.id===id);
 function nextName(type){
-  const pre={hb:'HB ',pw:'PW ',quelle:'Quelle ',brunnen:'Brunnen '}[type]||'Objekt '; let i=1;
+  const pre={hb:'HB ',pw:'PW ',quelle:'Quelle ',brunnen:'Brunnen ',dea:'DEA ',schacht:'SS '}[type]||'Objekt '; let i=1;
   while(S.nodes.some(n=>n.name===pre+i)) i++; return pre+i;
 }
 function addNode(type,x,y){
   x=Math.round(x/10)*10; y=Math.round(y/10)*10;
   const o=type==='hb'?{type,cap:1000,v:500,demand:40,lo:20,hi:96}:type==='quelle'?{type,cap:60,v:30,sch:20}
+    :type==='dea'?{type,demand:20,soll:4.5,q:40,mode:'auto',run:false}:type==='schacht'?{type,sch:{},flut:false}
     :type==='brunnen'?{type,q:60,mode:'auto',on:40,off:90,run:false,ergieb:80,ruhe:12,absenk:8,tiefe:120}:{type,q:100,mode:'auto',on:40,off:90,run:false};
   Object.assign(o,{id:'n'+(S.seq++),name:nextName(type),x,y,pumps:[],rack:{slots:12,mods:[]},cab:{parts:[],wires:[]}});
   S.nodes.push(o); select({kind:'node',id:o.id}); $('#empty').hidden=true;
 }
 function linkKind(a,b){
+  if(a.type==='schacht'||b.type==='schacht') return ['hb','quelle','pw','brunnen','schacht'].includes(a.type)&&['hb','pw','dea','schacht'].includes(b.type)?'Rohrleitung':null;
+  if((a.type==='hb'||a.type==='quelle')&&b.type==='dea') return 'Zulaufleitung';
   if((a.type==='hb'||a.type==='quelle')&&b.type==='pw') return 'Saugleitung';
   if(a.type==='pw'&&b.type==='hb') return 'Druckleitung';
   if(a.type==='brunnen'&&b.type==='hb') return 'Brunnenleitung';
@@ -488,10 +551,11 @@ function addLink(fromId,toId){
   const a=byId(fromId), b=byId(toId);
   if(!a||!b) return;
   if(a===b){toast('Eine Leitung braucht zwei verschiedene Objekte.');return}
-  if(!linkKind(a,b)){toast(b.type==='quelle'||b.type==='brunnen'?'In eine Quelle oder einen Tiefbrunnen kann keine Leitung hineinführen.':a.type==='brunnen'?'Ein Tiefbrunnen fördert in einen Hochbehälter.':'Zwei Pumpwerke bitte über einen Hochbehälter verbinden.');return}
+  if(!linkKind(a,b)){toast(a.type==='dea'?'Eine Druckerhöhungsanlage versorgt ihre Druckzone direkt. Zulauf kommt aus einem Hochbehälter, einer Quelle oder einem Schieberschacht.':b.type==='quelle'||b.type==='brunnen'?'In eine Quelle oder einen Tiefbrunnen kann keine Leitung hineinführen.':a.type==='brunnen'?'Ein Tiefbrunnen fördert in einen Hochbehälter.':'Zwei Pumpwerke bitte über einen Hochbehälter verbinden.');return}
   if(S.links.some(l=>l.from===a.id&&l.to===b.id)){toast('Diese Leitung gibt es schon.');return}
   if(S.links.some(l=>l.from===b.id&&l.to===a.id)){toast('Es gibt schon eine Leitung in Gegenrichtung.');return}
   const l={id:'l'+(S.seq++),from:a.id,to:b.id,q:80}; S.links.push(l);
+  for(const n of [a,b]) if(n.type==='schacht') n.sch[l.id]=1;
   select({kind:'link',id:l.id}); toast(linkKind(a,b)+' angelegt: '+a.name+' → '+b.name);
 }
 function removeSel(){
@@ -511,6 +575,19 @@ const facNorm=(()=>{let s=0;for(let i=0;i<240;i++)s+=rawFac(i/10);return s/240})
 const dayFac=t=>rawFac((t/60)%24)/facNorm;
 const frac=n=>n.cap>0?n.v/n.cap:0;
 
+function buildPaths(lf){
+  const P=[],bad=new Set(),isS=n=>n&&n.type==='schacht';
+  const sv=(sh,l)=>sh.sch&&sh.sch[l.id]!=null?+sh.sch[l.id]:1;
+  for(const l of S.links){const a=byId(l.from);if(!a||isS(a))continue;
+    const walk=(link,f,q,chain,seen)=>{const b=byId(link.to);if(!b)return;let ff=f*lf(link),qq=Math.min(q,link.q||80);
+      if(isS(b)){if(seen.has(b.id))return;ff*=sv(b,link);const s2=new Set(seen);s2.add(b.id);
+        const outs=S.links.filter(x=>x.from===b.id);if(!outs.length)bad.add(b.id);
+        for(const o of outs)walk(o,ff*sv(b,o),qq,[...chain,o],s2);return;}
+      const k=linkKind(a,b);
+      if(!k||k==='Rohrleitung'){for(const x of chain){const t=byId(x.to);if(isS(t))bad.add(t.id);}return}
+      P.push({src:a,dst:b,links:chain,f:ff,q:qq,flow:0});};
+    walk(l,1,Infinity,[l],new Set());}
+  return {P,bad};}
 function step(dtMin){
   const dtH=dtMin/60, f=dayFac(S.t);
   for(const n of S.nodes){n.qin=0;n.qout=0;n.over=false;n.fault=null;}
@@ -521,43 +598,64 @@ function step(dtMin){
     if(!it.stoer&&it.cmd&&(it.mode==='hand'||rtuOk(it))){const r=dtMin*60/Math.max(1,it.t); it.open=it.cmd==='auf'?Math.min(1,it.open+r):Math.max(0,it.open-r);}
   }
   const fac={}; for(const it of S.items) if(it.kind==='klappe'&&it.link) fac[it.link]=(fac[it.link]??1)*it.open;
-  const lf=l=>fac[l.id]??1;
+  const {P,bad}=buildPaths(l=>fac[l.id]??1); S._bad=bad;
   // Quellen: Schüttung in den Quellschacht, Überschuss geht in den Abschlag
   for(const q of S.nodes.filter(n=>n.type==='quelle')){const inf=q.sch*dtH, add=Math.min(inf,q.cap-q.v); q.v+=add; q.ab=(inf-add)/dtH; q.qin=q.sch;}
   // Pumpwerke und Tiefbrunnen
   for(const p of S.nodes.filter(n=>n.type==='pw'||n.type==='brunnen')){
-    const ins=S.links.filter(l=>l.to===p.id).map(l=>({l,n:byId(l.from)})).filter(x=>x.n);
-    const outs=S.links.filter(l=>l.from===p.id).map(l=>({l,n:byId(l.to)})).filter(x=>x.n);
+    const ins=P.filter(x=>x.dst===p).map(x=>({l:x,n:x.src})), outs=P.filter(x=>x.src===p).map(x=>({l:x,n:x.dst}));
     const ctrl=outs[0]&&outs[0].n;
     if(p.mode==='auto'&&ctrl){const pc=frac(ctrl)*100; if(pc<=p.on)p.run=true; if(pc>=p.off)p.run=false;}
     else if(p.mode==='hand') p.run=true; else if(p.mode==='aus') p.run=false;
     if(!outs.length){p.run=p.mode==='hand'; if(p.mode!=='aus')p.fault='ziel';}
     if(ins.length&&ins.every(x=>frac(x.n)<0.03)) p.fault='trocken';
-    const fo=outs.map(x=>lf(x.l)), fi=ins.map(x=>lf(x.l)), fos=fo.reduce((a,b)=>a+b,0), fis=fi.reduce((a,b)=>a+b,0);
+    const fo=outs.map(x=>x.l.f), fi=ins.map(x=>x.l.f), fos=fo.reduce((a,b)=>a+b,0), fis=fi.reduce((a,b)=>a+b,0);
     const wants=p.run||p.mode==='hand';
     if(!p.fault&&wants&&outs.length&&fos<0.02) p.fault='druck';
     if(!p.fault&&wants&&ins.length&&fis<0.02) p.fault='saug';
     let cap=p.pumps.length?pumpStep(p.pumps,{auto:p.mode==='auto'&&p.run,hand:p.mode==='hand',off:p.mode==='aus',block:!!p.fault,pc:ctrl?frac(ctrl)*100:100,on:p.on,off2:p.off},dtH):(p.run&&!p.fault?p.q:0);
     if(p.type==='brunnen'){p.overErg=cap>p.ergieb+1e-6; cap=Math.min(cap,p.ergieb);}
-    let vol=cap*dtH*(outs.length?fos/outs.length:1);
+    let vol=cap*dtH*(outs.length?Math.min(1,fos/outs.length):1);
     if(ins.length&&vol>0){const avail=ins.reduce((a,x,i)=>a+(fi[i]>0?x.n.v:0),0); vol=Math.min(vol,avail); let taken=0;
       ins.forEach((x,i)=>{if(!fi[i])return; const t=Math.min(vol*fi[i]/fis,x.n.v); x.n.v-=t; taken+=t; x.l.flow=t/dtH; x.n.qout+=t/dtH;}); vol=taken;}
     p.qd=vol/dtH; p.act=vol>1e-9;
     if(p.type==='brunnen') p.wsp=p.ruhe+p.absenk*p.qd/Math.max(1,p.ergieb);
     if(outs.length&&vol>0) outs.forEach((x,i)=>{if(!fo[i])return; const per=vol*fo[i]/fos, free=x.n.cap-x.n.v; if(per>free+1e-6)x.n.over=true; x.n.v=Math.min(x.n.cap,x.n.v+per); x.l.flow=per/dtH; x.n.qin+=per/dtH;});
   }
-  // Fallleitungen
-  for(const l of S.links){const a=byId(l.from),b=byId(l.to); if(!a||!b||!(a.type==='hb'||a.type==='quelle')||b.type!=='hb')continue;
-    if(frac(a)>0.02&&frac(b)<0.98){const v=Math.min(l.q*lf(l)*dtH,a.v,b.cap*0.98-b.v); if(v>0){a.v-=v;b.v+=v;l.flow=v/dtH;a.qout+=l.flow;b.qin+=l.flow;}}}
+  // Freier Zulauf: Fall-, Quell- und Schachtleitungen
+  for(const x of P){const a=x.src,b=x.dst; if(!(a.type==='hb'||a.type==='quelle')||b.type!=='hb')continue;
+    if(frac(a)>0.02&&frac(b)<0.98){const v=Math.min(x.q*x.f*dtH,a.v,b.cap*0.98-b.v); if(v>0){a.v-=v;b.v+=v;x.flow=v/dtH;a.qout+=x.flow;b.qin+=x.flow;}}}
+  // Druckerhöhungsanlagen versorgen ihre Druckzone
+  for(const d of S.nodes.filter(n=>n.type==='dea')){
+    const ins=P.filter(x=>x.dst===d), fis=ins.reduce((a,x)=>a+x.f,0), want=d.mode==='aus'?0:d.demand*f;
+    if(!ins.length) d.fault='zulauf'; else if(ins.every(x=>frac(x.src)<0.03)) d.fault='trocken'; else if(fis<0.02) d.fault='saug';
+    const grund=d.pumps.filter(p=>p.role==='grund'&&!p.stoer).reduce((a,p)=>a+p.q,0);
+    const cap=d.pumps.length?pumpStep(d.pumps,{auto:d.mode==='auto'&&want>0,hand:d.mode==='hand',off:d.mode==='aus',block:!!d.fault,pc:want>grund?0:100,on:50,off2:50},dtH):(d.mode!=='aus'&&!d.fault?d.q:0);
+    let vol=Math.min(want,cap)*dtH;
+    if(vol>0){const avail=ins.reduce((a,x)=>a+(x.f>0?x.src.v:0),0);vol=Math.min(vol,avail);let taken=0;
+      for(const x of ins){if(!x.f)continue;const t=Math.min(vol*x.f/fis,x.src.v);x.src.v-=t;taken+=t;x.flow=t/dtH;x.src.qout+=t/dtH;}vol=taken;}
+    d.qd=vol/dtH; d.qin=d.qd; d.act=d.qd>1e-6; d.qbed=want;
+    d.short=want>0.05&&d.qd<want*0.97; d.pdr=d.mode==='aus'?0:d.soll*(want>0.05?Math.min(1,d.qd/want):1);
+  }
   // Abgabe ins Versorgungsgebiet
   for(const h of S.nodes.filter(n=>n.type==='hb')){const want=h.demand*f*dtH, got=Math.min(want,h.v); h.v-=got; h.qd=got/dtH; h.short=got<want-1e-6;
     if(h.pumps.length)pumpStep(h.pumps,{auto:h.v>0.5,hand:false,off:false,block:h.v<=0.5,pc:f>1.25?0:100,on:50,off2:50},dtH);}
+  // Durchfluss auf die einzelnen Leitungen verteilen
+  for(const x of P)for(const l of x.links)l.flow+=x.flow;
+  for(const n of S.nodes)if(n.type==='schacht'){n.qin=S.links.filter(l=>l.to===n.id).reduce((a,l)=>a+l.flow,0);}
   // Wasserzähler
   for(const it of S.items){ if(it.kind!=='zaehler')continue; let q=0;
     if(it.link){const l=S.links.find(x=>x.id===it.link); q=l?l.flow||0:0;} else {const n=byId(it.node); q=n?n.qd||0:0;}
     it.qm=q; it.total=(it.total||0)+q*dtH; }
   S.t+=dtMin;
 }
+function shaftSVG(){let h='';
+  for(const l of S.links){const r=linkRoute(l);if(!r)continue;const {L}=segs(r.pts);if(!L)continue;
+    for(const [end,t] of [['from',Math.min(.45,26/L)],['to',Math.max(.55,1-30/L)]]){const n=byId(l[end]);if(!n||n.type!=='schacht')continue;
+      const o=n.sch&&n.sch[l.id]!=null?+n.sch[l.id]:1,P=pointAt(r.pts,t);
+      h+=`<g transform="translate(${P.x} ${P.y}) rotate(${P.hz?0:90})" style="pointer-events:none"><rect x="-9" y="-1.5" width="18" height="3" style="fill:var(--bg)"/><polygon class="vlv${o?' open':''}" points="-7,-6 -7,6 0,0"/><polygon class="vlv${o?' open':''}" points="7,-6 7,6 0,0"/><line x1="0" y1="0" x2="0" y2="-9" style="stroke:var(--equip);stroke-width:1.4"/><line x1="-4" y1="-9" x2="4" y2="-9" style="stroke:var(--equip);stroke-width:1.6"/></g>`;}}
+  return h;}
+function shaftLinks(n){return S.links.filter(l=>l.from===n.id||l.to===n.id)}
 
 /* ---------- Alarme ---------- */
 const since={}; let almNodes=new Set();
@@ -568,6 +666,15 @@ function alarms(){
       if(n.v<=0.5&&n.demand>0) A(n,'leer','a','Behälter leer, Versorgung unterbrochen');
       else if(pc<n.lo) A(n,'ts','a','Tiefstand ('+pc.toFixed(0)+' % < '+n.lo+' %)');
       if(n.over) A(n,'ul','a','Überlauf'); else if(pc>n.hi) A(n,'hs','w','Hochstand ('+pc.toFixed(0)+' % > '+n.hi+' %)');
+    } else if(n.type==='dea'){
+      if(n.fault==='trocken') A(n,'tr','a','Zulaufbehälter leer, Trockenlaufschutz');
+      if(n.fault==='saug') A(n,'sz','a','Zulauf geschlossen, Pumpen gesperrt');
+      if(n.fault==='zulauf') A(n,'zu','w','kein Zulauf angeschlossen');
+      if(n.short&&!n.fault) A(n,'pd','a','Versorgungsdruck unter Sollwert ('+fmt(n.pdr||0,1)+' bar)');
+      if(n.mode==='hand') A(n,'hd','w','Handbetrieb'); if(n.mode==='aus') A(n,'au','w','außer Betrieb, Druckzone unversorgt');
+    } else if(n.type==='schacht'){
+      if(n.flut) A(n,'fl','a','Schacht überflutet');
+      if(S._bad&&S._bad.has(n.id)) A(n,'bad','w','Leitung über den Schacht führt zu keinem gültigen Ziel');
     } else if(n.type==='quelle'){
       if(n.v<=0.5&&n.qout>0) A(n,'qleer','w','Quellschacht leergezogen, Entnahme größer als Schüttung');
     } else {
@@ -627,6 +734,27 @@ function nodeSVG(n,sel){
     <text class="sub" y="18" text-anchor="middle">${fmt(n.v)} m³</text>`;
     const tag=since[n.id+'|leer']!=null?['LEER','']:since[n.id+'|ul']!=null?['ÜL','']:since[n.id+'|ts']!=null?['TS','']:since[n.id+'|hs']!=null?['HS','w']:null;
     if(tag) h+=`<rect class="tagr ${tag[1]}" x="22" y="-38" width="${tag[0].length*6+8}" height="13" rx="2"/><text class="tagt" x="26" y="-28.5">${tag[0]}</text>`;
+  } else if(n.type==='dea'){
+    const pr=n.pdr??n.soll, fault=['trocken','saug'].includes(n.fault), r=i=>n.pumps.length?(n.pumps[i]?(n.pumps[i].stoer?' fault':n.pumps[i].run?' on':''):null):(n.act?' on':fault?' fault':'');
+    const pc=(i,cy)=>{const c=r(i);return c===null?'':`<circle class="pump${c}" cx="-27" cy="${cy}" r="10"/><polygon class="tri" points="-33,${cy-6} -33,${cy+6} -18,${cy}"/>`};
+    h+=`<text class="nm" y="-44" text-anchor="middle">${esc(n.name)}</text>
+    <rect class="body" x="-45" y="-34" width="90" height="68" rx="6"/>
+    ${pc(0,-11)}${pc(1,13)}
+    <text class="mode" x="15" y="-18" text-anchor="middle">${n.mode==='auto'?'AUTO':n.mode==='hand'?'HAND':'AUS'}</text>
+    <text class="val" x="15" y="0" text-anchor="middle" style="font-size:13px${n.short?';fill:var(--alarm)':''}">${fmt(pr,1)} bar</text>
+    <text class="sub" x="15" y="13" text-anchor="middle">Soll ${fmt(n.soll,1)}</text>
+    <text class="sub" x="15" y="26" text-anchor="middle">${fmt(n.qd||0)} m³/h</text>`;
+  } else if(n.type==='schacht'){
+    const ls=shaftLinks(n), zu=ls.filter(l=>n.sch[l.id]!=null&&!+n.sch[l.id]).length, c=!ls.length?'':zu===0?' open':zu===ls.length?'':' mid';
+    h+=`<text class="nm" y="-48" text-anchor="middle">${esc(n.name)}</text>
+    <rect class="casing" x="-15" y="-40" width="30" height="6" rx="1"/>
+    <rect class="body" x="-40" y="-34" width="80" height="68" rx="2"/>
+    ${n.flut?'<rect class="wfill" x="-39" y="6" width="78" height="27"/><line class="wtop" x1="-39" x2="39" y1="6" y2="6"/>':''}
+    <line class="stub" x1="-40" x2="40" y1="10" y2="10"/>
+    <polygon class="vlv${c}" points="-9,2 -9,18 0,10"/><polygon class="vlv${c}" points="9,2 9,18 0,10"/><line x1="0" y1="10" x2="0" y2="-2" style="stroke:var(--equip);stroke-width:1.5"/><line x1="-6" y1="-2" x2="6" y2="-2" style="stroke:var(--equip);stroke-width:2"/>
+    <text class="sub" y="-18" text-anchor="middle">${ls.length} Schieber${zu?' · '+zu+' zu':''}</text>
+    <text class="sub" y="29" text-anchor="middle">${fmt(n.qin||0)} m³/h</text>`;
+    if(n.flut) h+=`<rect class="tagr" x="16" y="-32" width="22" height="13" rx="2"/><text class="tagt" x="20" y="-22.5">FL</text>`;
   } else if(n.type==='quelle'){
     const fr=frac(n), top=38-TH*fr, shape='M-45 40 V-14 Q0 -46 45 -14 V40 Z';
     h+=`<text class="nm" y="-44" text-anchor="middle">${esc(n.name)}</text>
@@ -665,7 +793,7 @@ function nodeSVG(n,sel){
   const by=n.type==='hb'||n.type==='quelle'?48:n.type==='brunnen'?48:42;
   if(n.pumps.length){const sp=12,x0=-(n.pumps.length-1)*sp/2; n.pumps.forEach((p,i)=>h+=`<circle class="pdot${p.stoer?' fault':p.run?' on':''}" cx="${x0+i*sp}" cy="${by}" r="4"/>`);}
   if(n.rack.mods.length) h+=`<rect class="fwb" x="-43" y="${n.type==='hb'?-38:-32}" width="18" height="11" rx="2"/><text class="fwt" x="-34" y="${n.type==='hb'?-30:-24}" text-anchor="middle">FW</text>`;
-  h+=`${n.type==='hb'||n.type==='pw'?`<circle class="port" cx="${-HW}" cy="0" r="5"/>`:''}<circle class="porthit" data-port="${n.id}" cx="${HW}" cy="0" r="15"/><circle class="port out" cx="${HW}" cy="0" r="6"/></g>`;
+  h+=`${['hb','pw','dea','schacht'].includes(n.type)?`<circle class="port" cx="${-HW}" cy="0" r="5"/>`:''}<circle class="porthit" data-port="${n.id}" cx="${HW}" cy="0" r="15"/><circle class="port out" cx="${HW}" cy="0" r="6"/></g>`;
   return h;
 }
 function render(now){
@@ -681,7 +809,7 @@ function render(now){
       const t=fmt(l.flow)+' m³/h'; h+=`<rect class="flab-bg" x="${r.lx-t.length*3.3}" y="${r.ly-9}" width="${t.length*6.6}" height="12"/><text class="flab" x="${r.lx}" y="${r.ly}" text-anchor="middle">${t}</text>`;}
     h+='</g>';}
   if(tempLine){const a=byId(tempLine.from); if(a){const r=route(a.x+HW,a.y,tempLine.x,tempLine.y); h+=`<path class="pipe temp" d="${r.d}"/>`;}}
-  h+=itemsSVG();
+  h+=shaftSVG()+itemsSVG();
   for(const n of S.nodes) h+=nodeSVG(n,S.sel&&S.sel.kind==='node'&&S.sel.id===n.id);
   world.innerHTML=h;
 }
@@ -689,8 +817,8 @@ function renderHeader(){
   $('#clock').textContent=fmtT(S.t);
   const hbs=S.nodes.filter(n=>n.type==='hb'), cap=hbs.reduce((a,n)=>a+n.cap,0), vol=hbs.reduce((a,n)=>a+n.v,0);
   $('#stVorrat').textContent=cap?fmt(vol)+' m³ · '+fmt(vol/cap*100)+' %':'–';
-  $('#stAbgabe').textContent=fmt(hbs.reduce((a,n)=>a+(n.qd||0),0))+' m³/h';
-  const pws=S.nodes.filter(n=>n.type==='pw'||n.type==='brunnen');
+  $('#stAbgabe').textContent=fmt(S.nodes.filter(n=>n.type==='hb'||n.type==='dea').reduce((a,n)=>a+(n.qd||0),0))+' m³/h';
+  const pws=S.nodes.filter(n=>n.type==='pw'||n.type==='brunnen'||n.type==='dea');
   $('#stPumpen').textContent=pws.filter(p=>p.act).length+' / '+pws.length;
 }
 
@@ -701,12 +829,12 @@ function renderPanel(force){
   const key=s?s.kind+s.id:'none'; if(!force&&key===lastPanel) return; lastPanel=key;
   if(!o){
     el.innerHTML=`<div class="kind">Übersicht</div><h2>Anlage bearbeiten</h2>
-    <ol><li>Hochbehälter und Pumpwerke aus der Bausteinleiste ins Prozessbild ziehen.</li>
+    <ol><li>Brunnen, Quellen, Hochbehälter, Pumpwerke, Druckerhöhungsanlagen und Schieberschächte aus der Bausteinleiste ins Prozessbild ziehen.</li>
     <li>Vom dunklen Anschluss rechts am Objekt eine Leitung zum Ziel ziehen. Die Pfeilrichtung ist die Fließrichtung.</li>
     <li>Ein Objekt antippen, um Name, Größe und Schaltpunkte einzustellen.</li>
     <li>Doppelklick auf ein Objekt öffnet die Stationsansicht mit Pumpen, Fernwirk-Rack und Schaltschrank.</li></ol>
     <div class="sect">Leitungsarten</div>
-    <p><b>Saugleitung</b> Hochbehälter oder Quelle → Pumpwerk<br><b>Druckleitung</b> Pumpwerk → Hochbehälter<br><b>Brunnenleitung</b> Tiefbrunnen → Hochbehälter<br><b>Fallleitung</b> Hochbehälter → Hochbehälter (freier Zulauf)<br><b>Quellleitung</b> Quelle → Hochbehälter (freier Zulauf)</p>
+    <p><b>Saugleitung</b> Hochbehälter oder Quelle → Pumpwerk<br><b>Druckleitung</b> Pumpwerk → Hochbehälter<br><b>Brunnenleitung</b> Tiefbrunnen → Hochbehälter<br><b>Fallleitung</b> Hochbehälter → Hochbehälter (freier Zulauf)<br><b>Quellleitung</b> Quelle → Hochbehälter (freier Zulauf)<br><b>Zulaufleitung</b> Hochbehälter oder Quelle → Druckerhöhungsanlage<br><b>Rohrleitung</b> zu und von einem Schieberschacht. Der Schacht verteilt das Wasser über seine Schieber auf die abgehenden Leitungen.</p>
     <div class="sect">Armaturen</div>
     <p><b>Klappen</b> und <b>Wasserzähler</b> auf eine Leitung ziehen. Ein Zähler am Hochbehälter misst die Abgabe ins Netz. Klappen fahren vor Ort, fern über die Fernwirkstation oder automatisch nach Füllstand.</p>
     <p>Ein Pumpwerk ohne Saugleitung fördert aus Brunnen bzw. Rohwasser. Im Automatikbetrieb schaltet es nach dem Füllstand des ersten Zielbehälters. Die Abgabe ins Netz folgt einer Tagesganglinie mit Spitzen morgens und abends.</p>
@@ -719,8 +847,29 @@ function renderPanel(force){
     const a=byId(o.from),b=byId(o.to), k=linkKind(a,b);
     el.innerHTML=`<div class="kind">${k}</div><h2>${esc(a.name)} → ${esc(b.name)}</h2>
     <div class="live"><span>Durchfluss</span><b data-live="lflow">–</b></div>
-    ${k==='Fallleitung'||k==='Quellleitung'?fld('Durchfluss max.','q',o.q,'m³/h',0,5000,5)+'<p>Fließt, solange der obere Behälter Wasser hat und der untere unter 98 % steht.</p>':'<p>Der Durchfluss ergibt sich aus der Förderleistung des Pumpwerks.</p>'}
+    ${k==='Fallleitung'||k==='Quellleitung'||k==='Rohrleitung'?fld('Durchfluss max.','q',o.q,'m³/h',0,5000,5)+(k==='Rohrleitung'?'<p>Leitung am Schieberschacht. Bei freiem Zulauf begrenzt dieser Wert den Durchfluss, bei Pumpenförderung bestimmen die Pumpen den Durchfluss. Die Schieber stellst du am Schacht.</p>':'<p>Fließt, solange der obere Behälter Wasser hat und der untere unter 98 % steht.</p>'):'<p>Der Durchfluss ergibt sich aus der Förderleistung des Pumpwerks.</p>'}
     ${armList(o)}<div>${del}</div>`;
+  } else if(o.type==='dea'){
+    const ins=S.links.filter(l=>l.to===o.id).map(l=>byId(l.from)?.name).filter(Boolean);
+    el.innerHTML=`<div class="kind">Druckerhöhungsanlage</div>
+    <div class="fld wide"><label for="f_name">Bezeichnung</label><input id="f_name" data-f="name" value="${esc(o.name)}"></div>
+    <div class="seg" role="group" aria-label="Betriebsart">${['auto','hand','aus'].map(m=>`<button data-mode="${m}" aria-pressed="${o.mode===m}">${m==='auto'?'Automatik':m==='hand'?'Hand Ein':'Aus'}</button>`).join('')}</div>
+    <div class="live"><span>Versorgungsdruck</span><b data-live="pr">–</b><span>Abgabe Druckzone</span><b data-live="qd">–</b><span>Bedarf</span><b data-live="want">–</b><span>Zulauf aus</span><b>${ins.length?esc(ins.join(', ')):'–'}</b></div>
+    <div class="sect">Auslegung</div>
+    ${fld('Mittlere Abgabe','demand',o.demand,'m³/h',0,5000,1)}${fld('Solldruck','soll',o.soll,'bar',0,16,0.1)}
+    ${o.pumps.length?`<div class="live"><span>Leistung aus ${o.pumps.length} Pumpen ohne Reserve</span><b>${fmt(o.pumps.filter(p=>p.role!=='reserve').reduce((a,p)=>a+p.q,0))} m³/h</b></div>`:fld('Förderleistung','q',o.q,'m³/h',1,5000,1)}
+    <p>Die Anlage hält den Solldruck in ihrer Druckzone. Reicht Zulauf oder Pumpenleistung nicht, sinkt der Druck und es kommt eine Meldung. Die Abgabe folgt der Tagesganglinie.</p>
+    ${stationBox(o)}`;
+  } else if(o.type==='schacht'){
+    const ls=shaftLinks(o);
+    el.innerHTML=`<div class="kind">Schieberschacht</div>
+    <div class="fld wide"><label for="f_name">Bezeichnung</label><input id="f_name" data-f="name" value="${esc(o.name)}"></div>
+    <div class="live"><span>Durchfluss</span><b data-live="sq">–</b></div>
+    <div class="sect">Schieber</div>
+    ${ls.length?ls.map(l=>{const other=byId(l.from===o.id?l.to:l.from),op=o.sch[l.id]==null?1:+o.sch[l.id];return `<div class="svrow"><span>${l.to===o.id?'Zulauf von':'Abgang nach'} <b>${esc(other?.name||'?')}</b></span><div class="seg" role="group" aria-label="Schieber"><button data-sv="${l.id}" data-sval="1" aria-pressed="${!!op}">Auf</button><button data-sv="${l.id}" data-sval="0" aria-pressed="${!op}">Zu</button></div></div>`}).join(''):'<p>Noch keine Leitungen. Eine Leitung in den Schacht hinein und mindestens eine hinaus ziehen. Jede Leitung erhält im Schacht einen eigenen Schieber.</p>'}
+    <label class="chk"><input type="checkbox" data-f="flut" ${o.flut?'checked':''}> Überflutung simulieren</label>
+    <p>Der Schacht hat keinen Speicher. Wasser aus den Zuläufen geht über die offenen Schieber in die Abgänge.</p>
+    ${stationBox(o)}`;
   } else if(o.type==='quelle'){
     el.innerHTML=`<div class="kind">Wasserquelle</div>
     <div class="fld wide"><label for="f_name">Bezeichnung</label><input id="f_name" data-f="name" value="${esc(o.name)}"></div>
@@ -764,6 +913,8 @@ function updateLive(){
       set('ipos',fmt(o.open*100)+' %'); set('ist',o.stoer?'Störung':mv?(o.cmd==='auf'?'fährt auf':'fährt zu'):o.open>=.999?'auf':o.open<=.001?'zu':'Zwischenstellung',o.stoer?'alm':mv?'on':''); set('iq',fmt(l?l.flow||0:0)+' m³/h');}
     else {set('iq',fmt(o.qm||0)+' m³/h',(o.qm||0)>0.05?'on':''); set('itot',fmt(o.total,1)+' m³');}
     return;}
+  if(o.type==='dea'){set('pr',fmt(o.pdr??o.soll,1)+' bar',o.short?'alm':''); set('qd',fmt(o.qd||0)+' m³/h',o.act?'on':''); set('want',fmt(o.qbed||0)+' m³/h'); return;}
+  if(o.type==='schacht'){set('sq',fmt(o.qin||0)+' m³/h',(o.qin||0)>0.05?'on':''); return;}
   if(o.type==='quelle'){set('lvl',fmt(frac(o)*100,1)+' %'); set('qin',fmt(o.sch)+' m³/h'); set('qout',fmt(o.qout||0)+' m³/h'); set('ab',fmt(o.ab||0)+' m³/h'); const r=$('#f_lvl'); if(r&&document.activeElement!==r) r.value=Math.round(frac(o)*100); return;}
   if(S.sel.kind==='link'){set('lflow',fmt(o.flow||0)+' m³/h',o.flow>0?'on':'');return}
   if(o.type==='hb'){const pc=frac(o)*100;
@@ -779,6 +930,7 @@ function updateLive(){
 $('#props').addEventListener('input',e=>{
   const t=e.target, f=t.dataset.f, o=selObj(); if(!f||!o) return;
   if(f==='name'){o.name=t.value.slice(0,40)||'—';return}
+  if(t.type==='checkbox'){o[f]=t.checked;return}
   const v=Number(t.value); if(!isFinite(v)) return;
   if(f==='lvl'){o.v=o.cap*v/100;return}
   if(f==='cap'){if(v<=0)return; const fr=frac(o);o.cap=v;o.v=fr*v;return}
@@ -791,6 +943,7 @@ $('#props').addEventListener('click',e=>{
   if(m&&o){o.mode=m.dataset.mode; if(o.mode==='aus')o.run=false; renderPanel(true);}
   if(a&&a.dataset.act==='del') removeSel();
   if(a&&a.dataset.act==='station'&&S.sel) openStation(S.sel.id);
+  const sv=e.target.closest('[data-sv]'); if(sv&&o&&o.type==='schacht'){o.sch[sv.dataset.sv]=+sv.dataset.sval; renderPanel(true);}
 });
 
 /* ---------- Bedienung Prozessbild ---------- */
@@ -893,18 +1046,58 @@ const MODS={
   ao4:{n:'Analogausgänge 4× 4–20 mA',s:'AO 4',w:1,ch:4,io:'AO',cat:'io'},
   cnt4:{n:'Zählereingänge 4×',s:'CNT 4',w:1,ch:4,io:'Z',cat:'io'}};
 const PROTOS=['IEC 60870-5-104','IEC 60870-5-101','IEC 61850','Modbus TCP','DNP3'];
+const PGROUPS=[['ein','Einspeisung & Schutz'],['mot','Motorabgänge & Antriebe'],['ctl','Steuern & Koppeln'],['mess','Messen & Überwachen'],['bed','Bedienen & Melden'],['aus','Schrankausstattung & Kommunikation'],['kl','Klemmen']];
 const PARTS={
-  rtu:{n:'Fernwirkstation (Steuerung)',s:'Fernwirkstation',pre:'A'},
-  hs:{n:'Hauptschalter',s:'Hauptschalter',pre:'Q',w:50,h:84,top:['1','3','5'],bot:['2','4','6']},
-  ls:{n:'Leitungsschutzschalter',s:'LS',pre:'F',w:18,h:80,top:['1'],bot:['2']},
-  mss:{n:'Motorschutzschalter',s:'MSS',pre:'Q',w:45,h:86,top:['1','3','5'],bot:['2','4','6']},
-  schuetz:{n:'Schütz',s:'Schütz',pre:'Q',w:56,h:86,top:['A1','1','3','5','13'],bot:['A2','2','4','6','14']},
-  relais:{n:'Koppelrelais',s:'Relais',pre:'K',w:32,h:80,top:['A1','11'],bot:['A2','12','14']},
-  mu:{n:'Messumformer 4–20 mA',s:'MU',pre:'B',w:34,h:90,top:['L+','M'],bot:['I+','I−']},
-  nt:{n:'Netzteil 24 V DC',s:'24 V DC',pre:'T',w:62,h:90,top:['L','N','PE'],bot:['+','+','−','−'],dk:1},
-  fu:{n:'Frequenzumrichter',s:'FU',pre:'T',w:80,h:120,top:['L1','L2','L3','PE'],bot:['U','V','W','PE'],dk:1},
-  klemme:{n:'Reihenklemme',s:'X',pre:'X',w:14,h:56,top:['1'],bot:['2']},
-  leiste:{n:'Klemmenleiste 8×',s:'Klemmen',pre:'X',w:112,h:56,top:['1','2','3','4','5','6','7','8'],bot:['1','2','3','4','5','6','7','8']}};
+  hs:{g:'ein',n:'Hauptschalter',s:'Hauptschalter',pre:'Q',w:50,h:84,top:['1','3','5'],bot:['2','4','6'],acc:'hs'},
+  nh:{g:'ein',n:'NH-Sicherungslasttrennschalter',s:'NH 00',pre:'F',w:66,h:110,top:['1','3','5'],bot:['2','4','6'],acc:'nh'},
+  spd:{g:'ein',n:'Überspannungsschutz Typ 1+2',s:'SPD T1+T2',pre:'F',w:72,h:90,top:['L1','L2','L3','N'],bot:['PE']},
+  spdm:{g:'ein',n:'Überspannungsschutz MSR (4–20 mA)',s:'SPD MSR',pre:'F',w:24,h:90,top:['1','2'],bot:['3','4']},
+  fi:{g:'ein',n:'FI-Schutzschalter 4-polig 30 mA',s:'RCD 4p',pre:'F',w:72,h:86,top:['1','3','5','N'],bot:['2','4','6','N'],acc:'test'},
+  fils:{g:'ein',n:'FI/LS-Schalter 1+N',s:'RCBO',pre:'F',w:36,h:86,top:['1','N'],bot:['2','N'],acc:'test'},
+  ls:{g:'ein',n:'Leitungsschutzschalter 1-polig',s:'LS',pre:'F',w:18,h:80,top:['1'],bot:['2']},
+  ls3:{g:'ein',n:'Leitungsschutzschalter 3-polig',s:'LS 3p',pre:'F',w:54,h:80,top:['1','3','5'],bot:['2','4','6']},
+  ezz:{g:'ein',n:'Energiezähler 3~ (MID)',s:'kWh',pre:'P',w:72,h:100,top:['L1','L2','L3','N'],bot:['L1','L2','L3','N'],acc:'lcd'},
+  swl:{g:'ein',n:'Stromwandler',s:'SW',pre:'T',w:30,h:56,top:['S1'],bot:['S2']},
+  pwach:{g:'ein',n:'Netz- und Phasenüberwachung',s:'Phase',pre:'K',w:40,h:86,top:['L1','L2','L3'],bot:['11','12','14'],acc:'led'},
+  mss:{g:'mot',n:'Motorschutzschalter',s:'MSS',pre:'Q',w:45,h:86,top:['1','3','5'],bot:['2','4','6'],acc:'dial'},
+  schuetz:{g:'mot',n:'Leistungsschütz',s:'Schütz',pre:'Q',w:56,h:86,top:['A1','1','3','5','13'],bot:['A2','2','4','6','14']},
+  hilfs:{g:'mot',n:'Hilfsschütz',s:'Hilfsschütz',pre:'K',w:45,h:86,top:['A1','13','23','33'],bot:['A2','14','24','34']},
+  msr:{g:'mot',n:'Motorschutzrelais (Bimetall)',s:'MSR',pre:'F',w:60,h:60,top:['1','3','5'],bot:['2','4','6','95','96','98'],acc:'dial'},
+  wende:{g:'mot',n:'Wendeschützkombination (Schieberantrieb)',s:'Wende',pre:'Q',w:120,h:86,top:['A1-1','A1-2','1','3','5'],bot:['A2','2','4','6','14']},
+  sd:{g:'mot',n:'Stern-Dreieck-Kombination',s:'Y-Δ',pre:'Q',w:150,h:86,top:['A1','1','3','5'],bot:['A2','U1','V1','W1','U2','V2','W2']},
+  sanft:{g:'mot',n:'Sanftanlasser',s:'Sanftanlasser',pre:'T',w:72,h:120,top:['L1','L2','L3','A1','A2'],bot:['T1','T2','T3','13','14'],dk:1,acc:'led'},
+  fu:{g:'mot',n:'Frequenzumrichter',s:'FU',pre:'T',w:80,h:120,top:['L1','L2','L3','PE'],bot:['U','V','W','PE'],dk:1,acc:'lcd'},
+  ptc:{g:'mot',n:'Thermistor-Motorschutzrelais',s:'PTC',pre:'F',w:40,h:86,top:['A1','T1'],bot:['A2','T2','11','14'],acc:'led'},
+  rtu:{g:'ctl',n:'Fernwirkstation (Steuerung)',s:'Fernwirkstation',pre:'A'},
+  sps:{g:'ctl',n:'Kleinsteuerung',s:'Logik',pre:'A',w:108,h:90,top:['L+','M','I1','I2','I3','I4'],bot:['Q1','Q2','Q3','Q4'],acc:'lcd'},
+  relais:{g:'ctl',n:'Koppelrelais',s:'Relais',pre:'K',w:32,h:80,top:['A1','11'],bot:['A2','12','14']},
+  zr:{g:'ctl',n:'Zeitrelais',s:'Zeit',pre:'K',w:36,h:86,top:['A1','15'],bot:['A2','16','18'],acc:'dial'},
+  nivr:{g:'ctl',n:'Niveaurelais (Trockenlauf / Überflutung)',s:'Niveau',pre:'K',w:54,h:86,top:['A1','A2','E0','E1','E2'],bot:['11','12','14'],acc:'led'},
+  tv:{g:'ctl',n:'Trennverstärker / Speisetrenner 4–20 mA',s:'Speisetrenner',pre:'T',w:18,h:100,top:['1','2'],bot:['3','4'],acc:'ex'},
+  mu:{g:'mess',n:'Messumformer 4–20 mA',s:'MU',pre:'B',w:34,h:90,top:['L+','M'],bot:['I+','I−']},
+  mid:{g:'mess',n:'Messumformer Durchfluss (MID)',s:'MID',pre:'B',w:90,h:120,top:['L','N','PE'],bot:['I+','I−','P+','P−'],dk:1,acc:'lcd'},
+  ana:{g:'mess',n:'Analysenmessumformer (Chlor, Trübung, pH)',s:'Analyse',pre:'B',w:90,h:120,top:['L','N','PE'],bot:['I1+','I1−','I2+','I2−'],dk:1,acc:'lcd'},
+  anz:{g:'mess',n:'Digitalanzeige 4–20 mA',s:'Anzeige',pre:'P',w:72,h:48,top:['+','−'],bot:['I+','I−'],acc:'lcd'},
+  gw:{g:'mess',n:'Gaswarnzentrale (Chlorgas)',s:'Gaswarn',pre:'B',w:72,h:86,top:['L','N'],bot:['11','12','14','I+','I−'],acc:'lcd'},
+  wahl:{g:'bed',n:'Wahlschalter Hand-0-Auto',s:'H-0-A',pre:'S',w:36,h:60,top:['13','23'],bot:['14','24'],acc:'knob'},
+  taster:{g:'bed',n:'Drucktaster',s:'Taster',pre:'S',w:30,h:56,top:['13'],bot:['14'],acc:'btn',col:'gn'},
+  notaus:{g:'bed',n:'Not-Halt-Befehlsgerät',s:'Not-Halt',pre:'S',w:44,h:60,top:['11','21'],bot:['12','22'],acc:'nothalt'},
+  lm:{g:'bed',n:'Leuchtmelder',s:'Leuchte',pre:'P',w:30,h:56,top:['X1'],bot:['X2'],acc:'lamp',col:'rt'},
+  bsz:{g:'bed',n:'Betriebsstundenzähler',s:'h-Zähler',pre:'P',w:45,h:48,top:['A1'],bot:['A2'],acc:'lcd'},
+  nt:{g:'aus',n:'Netzteil 24 V DC',s:'24 V DC',pre:'T',w:62,h:90,top:['L','N','PE'],bot:['+','+','−','−'],dk:1,acc:'led'},
+  usv:{g:'aus',n:'USV-Modul 24 V DC',s:'USV',pre:'G',w:54,h:100,top:['+','−'],bot:['+','−','13','14'],dk:1,acc:'led'},
+  akku:{g:'aus',n:'Akkumulator 24 V',s:'Akku',pre:'G',w:90,h:80,top:['+','−'],bot:[],dk:1},
+  heiz:{g:'aus',n:'Schaltschrankheizung',s:'Heizung',pre:'E',w:54,h:70,top:['L','N'],bot:[],dk:1},
+  thermo:{g:'aus',n:'Thermostat',s:'Thermostat',pre:'B',w:30,h:60,top:['1'],bot:['2','4'],acc:'dial'},
+  hygro:{g:'aus',n:'Hygrostat',s:'Hygrostat',pre:'B',w:30,h:60,top:['1'],bot:['2','4'],acc:'dial'},
+  luefter:{g:'aus',n:'Filterlüfter',s:'Lüfter',pre:'E',w:80,h:80,top:['L','N','PE'],bot:[],dk:1,acc:'fan'},
+  leuchte:{g:'aus',n:'Schaltschrankleuchte',s:'Leuchte',pre:'E',w:120,h:28,top:['L','N','PE'],bot:[]},
+  steck:{g:'aus',n:'Schaltschranksteckdose',s:'Steckdose',pre:'X',w:45,h:60,top:['L','N','PE'],bot:[]},
+  switch:{g:'aus',n:'Industrial-Ethernet-Switch',s:'Switch',pre:'K',w:54,h:90,top:['+','−'],bot:['P1','P2','P3','P4','P5'],dk:1,acc:'led'},
+  router:{g:'aus',n:'LTE-/VPN-Router',s:'Router',pre:'K',w:54,h:90,top:['+','−'],bot:['WAN','LAN'],dk:1,acc:'led'},
+  pesch:{g:'aus',n:'PE-Schiene',s:'PE',pre:'X',w:160,h:20,top:['PE','PE','PE','PE','PE','PE','PE','PE'],bot:[],acc:'pe'},
+  nsch:{g:'aus',n:'N-Schiene',s:'N',pre:'X',w:160,h:20,top:['N','N','N','N','N','N','N','N'],bot:[],acc:'nb'},
+  kl:{g:'kl',n:'Klemmleiste',s:'Klemmleiste',pre:'X',w:24,h:76,top:[],bot:[]}};
 const WCOL={sw:{n:'Schwarz · Hauptstrom',c:'#1b1d1f'},bn:{n:'Braun · L',c:'#7a4a24'},hb:{n:'Hellblau · N',c:'#48a0dc'},gg:{n:'Grün-Gelb · PE',c:'#3f9b3a',y:'#e5c919'},rt:{n:'Rot · Steuerspannung AC',c:'#c8302a'},db:{n:'Dunkelblau · 24 V DC',c:'#203f9c'},or:{n:'Orange · Fremdspannung',c:'#e47a1c'}};
 const MM=['0,5','0,75','1,0','1,5','2,5','4','6','10'];
 const RAILS=[180,430,680,930], DUCTS=[70,305,555,805,1050], PLW=900, PLH=1100;
@@ -923,8 +1116,16 @@ function normExtra(n,s){
   n.rack.mods=n.rack.mods.filter(m=>MODS[m.kind]);
   for(const m of n.rack.mods){const d=MODS[m.kind];m.ch=Array.from({length:d.ch},(_,i)=>(m.ch&&m.ch[i])||'');m.typ=m.typ||'';m.slot=+m.slot||0;}
   n.cab=n.cab&&Array.isArray(n.cab.parts)?n.cab:{parts:[],wires:[]};n.cab.wires=Array.isArray(n.cab.wires)?n.cab.wires:[];
+  n.cab.anl=n.cab.anl||'';n.cab.ort=n.cab.ort||'';
+  for(const p of n.cab.parts){
+    if(p.kind==='klemme'||p.kind==='leiste'){const cnt=p.kind==='klemme'?1:8,old=p.id;
+      p.kind='kl';p.tech='Push-in';p.num='fort';p.start=1;p.terms=Array.from({length:cnt},()=>({id:'t'+(s.seq++),typ:'dg',nr:'',mm:'2,5',br:false,fuse:''}));
+      for(const w of n.cab.wires)for(const e of [w.a,w.b])if(e.p===old){const m=/^([tb])(\d+)$/.exec(e.t);if(m&&p.terms[+m[2]])e.t=p.terms[+m[2]].id+':'+m[1]+'0';}}
+    if(p.kind==='kl'){p.terms=(Array.isArray(p.terms)?p.terms:[]).filter(t=>t&&t.id);for(const t of p.terms){t.typ=KLT[t.typ]?t.typ:'dg';t.mm=KMM[t.mm]?t.mm:'2,5';t.nr=t.nr||'';t.br=!!t.br;t.fuse=t.fuse||'';}
+      p.tech=KTECH.includes(p.tech)?p.tech:'Push-in';p.num=p.num==='pen'?'pen':'fort';p.start=+p.start||1;}
+    if(PARTS[p.kind]&&PARTS[p.kind].col&&!LCOL[p.col])p.col=PARTS[p.kind].col;}
   n.cab.parts=n.cab.parts.filter(p=>PARTS[p.kind]);
-  for(const o of [...n.pumps,...n.rack.mods,...n.cab.parts,...n.cab.wires]){const k=parseInt(String(o.id).slice(1));if(k>=s.seq)s.seq=k+1;}
+  for(const o of [...n.pumps,...n.rack.mods,...n.cab.parts,...n.cab.wires,...n.cab.parts.flatMap(p=>p.terms||[])]){const k=parseInt(String(o.id).slice(1));if(k>=s.seq)s.seq=k+1;}
 }
 function pumpStep(pumps,c,dtH){
   const gf=pumps.some(x=>x.role==='grund'&&x.stoer);let q=0;
@@ -959,6 +1160,7 @@ function closeStation(){stEl.hidden=true;st.id=null;st.sel=null;st.tmp=null;rend
 $('#stBack').onclick=closeStation;
 document.querySelectorAll('#station .tabs button').forEach(b=>b.onclick=()=>{st.tab=b.dataset.tab;st.sel=null;renderStation();});
 function renderStation(){const n=stNode();if(!n){closeStation();return}
+  const noP=n.type==='quelle'||n.type==='schacht';if(noP&&st.tab==='pumpen')st.tab='rack';document.querySelector('#station [data-tab="pumpen"]').hidden=noP;
   $('#stKind').textContent=TYPENAME[n.type]||'Station';$('#stName').textContent=n.name;
   document.querySelectorAll('#station .tabs button').forEach(b=>b.setAttribute('aria-selected',b.dataset.tab===st.tab));
   if(st.tab==='pumpen'){palPumps(n);workPumps(n);}else if(st.tab==='rack'){palRack(n);workRack(n);}else{palCab(n);workCab(n);}
@@ -969,6 +1171,7 @@ function stSelObj(){const n=stNode(),s=st.sel;if(!n||!s)return null;
 function stRemove(){const n=stNode(),s=st.sel;if(!n||!s)return;
   if(s.k==='pump')n.pumps=n.pumps.filter(p=>p.id!==s.id);
   if(s.k==='mod'){for(const it of S.items)for(const k of ['doAuf','doZu','diAuf','diZu','cnt'])if(it[k]&&it[k].startsWith(s.id+':'))it[k]='';n.rack.mods=n.rack.mods.filter(m=>m.id!==s.id);n.cab.wires=n.cab.wires.filter(w=>!w.a.t.startsWith(s.id+':')&&!w.b.t.startsWith(s.id+':'));}
+  if(s.k==='part'&&s.t){const p=n.cab.parts.find(q=>q.id===s.id);if(p&&p.terms){p.terms=p.terms.filter(t=>t.id!==s.t);n.cab.wires=n.cab.wires.filter(w=>!(w.a.p===p.id&&w.a.t.startsWith(s.t+':'))&&!(w.b.p===p.id&&w.b.t.startsWith(s.t+':')));}st.sel={k:'part',id:s.id};renderStation();return}
   if(s.k==='part'){n.cab.parts=n.cab.parts.filter(p=>p.id!==s.id);n.cab.wires=n.cab.wires.filter(w=>w.a.p!==s.id&&w.b.p!==s.id);}
   if(s.k==='wire')n.cab.wires=n.cab.wires.filter(w=>w.id!==s.id);
   st.sel=null;renderStation();}
@@ -1031,17 +1234,44 @@ function workRack(n){
 }
 
 /* Schaltschrank */
+const KLT={
+  dg:{n:'Durchgangsklemme',s:'Durchgang',lv:1,cls:''},
+  ds:{n:'Doppelstockklemme',s:'Doppelstock',lv:2,cls:''},
+  ini:{n:'Initiatorenklemme 3-stöckig',s:'3-Stock',lv:3,cls:''},
+  pe:{n:'Schutzleiterklemme',s:'PE',lv:1,cls:'pe'},
+  n:{n:'N-Trennklemme',s:'N-Trenn',lv:1,cls:'n'},
+  tr:{n:'Trennklemme (Messtrennklemme)',s:'Trenn',lv:1,cls:'tr'},
+  si:{n:'Sicherungsklemme',s:'Sicherung',lv:1,cls:'si'}};
+const KMM={'1,5':11,'2,5':12,'4':14,'6':17,'10':21,'16':25};
+const KTECH=['Push-in','Zugfeder','Schraube'];
+const LCOL={gn:['Grün','#2f9e44'],rt:['Rot','#d23a2e'],ge:['Gelb','#e8b70e'],ws:['Weiß','#f2f2ee'],bl:['Blau','#2f6fd0'],sw:['Schwarz','#25282b']};
+const KH=76,KEND=7;
+function newTerm(typ,mm){return {id:sid('t'),typ:KLT[typ]?typ:'dg',nr:'',mm:mm||(typ==='pe'?'4':'2,5'),br:false,fuse:typ==='si'?'2 A':''}}
+function fullBmk(n,p){const c=n.cab||{};return (c.anl?'='+c.anl:'')+(c.ort?'+'+c.ort:'')+p.bmk}
+function klNumbers(p){const out={};let c=Math.max(0,parseInt(p.start)||1);
+  for(const t of p.terms){const lv=KLT[t.typ].lv,man=String(t.nr||'').trim();
+    if(man){const parts=man.split(/[,;]/).map(x=>x.trim()).filter(Boolean);out[t.id]=Array.from({length:lv},(_,k)=>parts[k]||(lv>1?(parts[0]||'?')+'.'+(k+1):parts[0]));continue}
+    if(p.num==='pen'&&(t.typ==='pe'||t.typ==='n')){out[t.id]=[t.typ==='pe'?'PE':'N'];continue}
+    out[t.id]=Array.from({length:lv},()=>String(c++));}
+  return out;}
+function klLayout(p){let x=KEND;const cols=[];for(const t of p.terms){const w=KMM[t.mm]||12;cols.push({t,x,w});x+=w;}return {cols,W:Math.max(24,x+KEND+3)}}
 function rtuLayout(n){let x=0;const cols=[];
   for(const m of [...n.rack.mods].sort((a,b)=>a.slot-b.slot)){const d=MODS[m.kind];
     const top=m.kind==='ps'?['L','N','PE']:[], bot=m.kind==='ps'?['+','−']:d.ch?Array.from({length:d.ch},(_,i)=>String(i+1)):[];
     const w=Math.max(d.w*26,Math.max(top.length,bot.length)*10+6);cols.push({m,d,x,w,top,bot});x+=w;}
   return {cols,W:Math.max(x,150),H:150};}
-function partDim(n,p){if(p.kind==='rtu'){const L=rtuLayout(n);return {w:L.W,h:L.H}}const d=PARTS[p.kind];return {w:d.w,h:d.h}}
+function partDim(n,p){if(p.kind==='rtu'){const L=rtuLayout(n);return {w:L.W,h:L.H}}if(p.kind==='kl')return {w:klLayout(p).W,h:KH};const d=PARTS[p.kind];return {w:d.w,h:d.h}}
 function portsOf(n,p){const out=[];
   if(p.kind==='rtu'){const L=rtuLayout(n);
     for(const c of L.cols){const x0=p.x-L.W/2+c.x,sl='S'+(c.m.slot+1)+'.';
       c.top.forEach((lb,i)=>out.push({id:c.m.id+':t'+i,lb,label:sl+lb,x:x0+c.w*(i+.5)/c.top.length,y:p.y-L.H/2+8,dir:-1,sig:''}));
       c.bot.forEach((lb,i)=>out.push({id:c.m.id+':b'+i,lb,label:sl+(c.d.io?c.d.io+lb:lb),x:x0+c.w*(i+.5)/c.bot.length,y:p.y+L.H/2-8,dir:1,sig:c.d.ch?c.m.ch[i]:''}));}
+    return out;}
+  if(p.kind==='kl'){const L=klLayout(p),nr=klNumbers(p),x0=p.x-L.W/2,y0=p.y-KH/2;
+    for(const c of L.cols){const lv=KLT[c.t.typ].lv,cx=x0+c.x+c.w/2;
+      for(let k=0;k<lv;k++){const lb=nr[c.t.id][k];
+        out.push({id:c.t.id+':t'+k,lb,label:lb,x:cx,y:y0+6+k*10,dir:-1,sig:'',side:'innen'});
+        out.push({id:c.t.id+':b'+k,lb,label:lb,x:cx,y:y0+KH-6-k*10,dir:1,sig:'',side:'außen'});}}
     return out;}
   const d=PARTS[p.kind];
   d.top.forEach((lb,i)=>out.push({id:'t'+i,lb,label:lb,x:p.x-d.w/2+d.w*(i+.5)/d.top.length,y:p.y-d.h/2+7,dir:-1,sig:''}));
@@ -1057,26 +1287,63 @@ function wirePath(a,b,i){const off=((i%7)-3)*4;
   const xs=((a.x+b.x)/2<PLW/2?23:PLW-23)+off;
   return `M${a.x} ${a.y} V${da+off} H${xs} V${db+off} H${b.x} V${b.y}`;}
 function nextBmk(n,pre){let m=0;const re=new RegExp('^-'+pre+'(\\d+)$');for(const p of n.cab.parts){const r=re.exec(p.bmk);if(r)m=Math.max(m,+r[1]);}return '-'+pre+(m+1);}
-function partIcon(k){const d=PARTS[k],w=k==='rtu'?30:Math.max(8,Math.min(30,d.w*0.4));
-  return `<svg width="34" height="32" viewBox="0 0 34 32" aria-hidden="true"><rect x="${17-w/2}" y="3" width="${w}" height="26" rx="1.5" style="fill:var(${d.dk?'--dev-dk':'--dev'});stroke:var(--dev-edge)"/>${k==='rtu'?'<rect x="2" y="3" width="30" height="4" style="fill:var(--c-io)"/>':''}<circle cx="17" cy="8" r="1.8" style="fill:var(--screw);stroke:var(--dev-edge);stroke-width:.6"/><circle cx="17" cy="24" r="1.8" style="fill:var(--screw);stroke:var(--dev-edge);stroke-width:.6"/></svg>`;}
+function partIcon(k){const d=PARTS[k];
+  if(k==='kl')return `<svg width="34" height="32" viewBox="0 0 34 32" aria-hidden="true"><rect x="3" y="4" width="4" height="24" style="fill:var(--k-end)"/>${[0,1,2,3].map(i=>`<rect x="${8+i*5.5}" y="4" width="5" height="24" style="fill:var(--k-gr);stroke:var(--dev-edge);stroke-width:.5"/>`).join('')}<rect x="30" y="4" width="2" height="24" style="fill:var(--k-end)"/></svg>`;
+  const w=k==='rtu'?30:Math.max(8,Math.min(30,(d.w||30)*0.4)),hh=Math.max(10,Math.min(26,(d.h||80)*0.28));
+  let a='';const col=d.col?LCOL[d.col][1]:'';
+  if(d.acc==='lcd')a=`<rect x="${17-w/2+2}" y="${16-hh/2+3}" width="${w-4}" height="5" style="fill:var(--lcd)"/>`;
+  else if(d.acc==='btn'||d.acc==='lamp')a=`<circle cx="17" cy="16" r="5" style="fill:${col}"/>`;
+  else if(d.acc==='nothalt')a=`<circle cx="17" cy="16" r="7" style="fill:#e8c60e"/><circle cx="17" cy="16" r="4.5" style="fill:#d23a2e"/>`;
+  else if(d.acc==='hs')a=`<rect x="12" y="11" width="10" height="10" style="fill:#e8c60e"/><rect x="15.5" y="9" width="3" height="14" style="fill:#d23a2e"/>`;
+  else if(d.acc==='pe')a=`<rect x="${17-w/2}" y="${16-hh/2}" width="${w}" height="${hh}" style="fill:#3f9b3a"/>`;
+  else if(d.acc==='nb')a=`<rect x="${17-w/2}" y="${16-hh/2}" width="${w}" height="${hh}" style="fill:#3d7fc4"/>`;
+  else if(d.acc==='knob'||d.acc==='dial')a=`<circle cx="17" cy="16" r="4.5" style="fill:#25282b"/>`;
+  else if(d.acc==='ex')a=`<rect x="${17-w/2}" y="${16-hh/2}" width="${w}" height="4" style="fill:#2f6fd0"/>`;
+  return `<svg width="34" height="32" viewBox="0 0 34 32" aria-hidden="true"><rect x="${17-w/2}" y="${16-hh/2}" width="${w}" height="${hh}" rx="1.5" style="fill:var(${d.dk?'--dev-dk':'--dev'});stroke:var(--dev-edge)"/>${k==='rtu'?'<rect x="2" y="9" width="30" height="4" style="fill:var(--c-io)"/>':''}${a}</svg>`;}
+function termIcon(t){const c={pe:'var(--k-pe)',n:'var(--k-n)',si:'var(--k-si)'}[t]||'var(--k-gr)',lv=KLT[t].lv;
+  return `<svg width="34" height="32" viewBox="0 0 34 32" aria-hidden="true"><rect x="12" y="2" width="10" height="28" rx="1" style="fill:${c};stroke:var(--dev-edge)"/>${t==='pe'?'<rect x="12" y="13" width="10" height="3" style="fill:#e5c919"/>':''}${Array.from({length:lv},(_,k)=>`<circle cx="17" cy="${6+k*5}" r="1.7" style="fill:var(--screw);stroke:var(--dev-edge);stroke-width:.5"/><circle cx="17" cy="${26-k*5}" r="1.7" style="fill:var(--screw);stroke:var(--dev-edge);stroke-width:.5"/>`).join('')}${t==='tr'?'<rect x="14" y="15" width="6" height="5" style="fill:#e07a1f"/>':''}${t==='si'?'<rect x="13.5" y="14" width="7" height="7" style="fill:#d9dde0"/>':''}</svg>`;}
+let palQ='';
 function palCab(n){
-  stPal.innerHTML=`<div class="ph">Bauteile</div><div class="tgroup">${Object.entries(PARTS).map(([k,d])=>`<div class="tool" data-k="${k}">${partIcon(k)}<div><b>${d.n}</b><small>Kennzeichen -${d.pre}</small></div></div>`).join('')}</div>
-  <div class="ph">Aderfarbe</div><div class="swatches">${Object.entries(WCOL).map(([k,c])=>`<button class="sw" data-wc="${k}" aria-pressed="${st.wc===k}" title="${c.n}" aria-label="${c.n}" style="background:${c.y?`repeating-linear-gradient(45deg,${c.c} 0 5px,${c.y} 5px 10px)`:c.c}"></button>`).join('')}</div><div class="wcname">${WCOL[st.wc].n}</div>
+  const q=palQ.toLowerCase(),hit=(...s)=>!q||s.join(' ').toLowerCase().includes(q);
+  let h=`<div class="fld wide"><label for="cabq">Bauteil suchen</label><input id="cabq" type="search" value="${esc(palQ)}" placeholder="z. B. Schütz, FI, Klemme" autocomplete="off"></div>`;
+  for(const [g,gn] of PGROUPS){
+    const parts=Object.entries(PARTS).filter(([k,d])=>d.g===g&&hit(d.n,d.s,'-'+d.pre,gn));
+    const terms=g==='kl'?Object.entries(KLT).filter(([k,d])=>hit(d.n,'klemme',gn)):[];
+    if(!parts.length&&!terms.length)continue;
+    h+=`<div class="ph">${gn}</div><div class="tgroup">${parts.map(([k,d])=>`<div class="tool" data-k="${k}">${partIcon(k)}<div><b>${d.n}</b><small>Kennzeichen -${d.pre}</small></div></div>`).join('')}${terms.map(([k,d])=>`<div class="tool" data-kt="${k}">${termIcon(k)}<div><b>${d.n}</b><small>${k==='pe'?'grün-gelb':k==='n'?'blau':k==='si'?'mit Sicherungshalter':k==='tr'?'mit Trennschieber':d.lv>1?d.lv+' Ebenen':'grau'}</small></div></div>`).join('')}</div>`;}
+  h+=`<div class="ph">Aderfarbe</div><div class="swatches">${Object.entries(WCOL).map(([k,c])=>`<button class="sw" data-wc="${k}" aria-pressed="${st.wc===k}" title="${c.n}" aria-label="${c.n}" style="background:${c.y?`repeating-linear-gradient(45deg,${c.c} 0 5px,${c.y} 5px 10px)`:c.c}"></button>`).join('')}</div><div class="wcname">${WCOL[st.wc].n}</div>
   <div class="fld"><label for="f_mm">Querschnitt</label><div class="in"><select id="f_mm">${MM.map(m=>`<option${st.mm===m?' selected':''}>${m}</option>`).join('')}</select><span class="u">mm²</span></div></div>
-  <p class="hint">Bauteile auf eine Hutschiene ziehen. Zum Verdrahten von einer Klemmstelle zur nächsten ziehen. Die Ader bekommt Farbe und Querschnitt von hier.</p>`;
-  stPal.querySelectorAll('.tool').forEach(el=>{const k=el.dataset.k;dragSource(el,{onTap:()=>addPart(n,k,null),onDrop:(x,y)=>{const c=$('#cab');if(!inside(c,x,y))return;const r=c.getBoundingClientRect(),v=st.cv;addPart(n,k,{x:(x-r.left-v.x)/v.k,y:(y-r.top-v.y)/v.k});}});});
+  <p class="hint">Bauteile auf eine Hutschiene ziehen. Klemmen auf eine Klemmleiste ziehen, um sie dort einzureihen, oder auf eine freie Stelle, um eine neue Leiste zu beginnen. Zum Verdrahten von Klemmstelle zu Klemmstelle ziehen.</p>`;
+  stPal.innerHTML=h;
+  const qi=$('#cabq');qi.oninput=()=>{palQ=qi.value;palCab(n);const e=$('#cabq');e.focus();e.setSelectionRange(e.value.length,e.value.length);};
+  const toPlate=(x,y)=>{const c=$('#cab');if(!inside(c,x,y))return null;const r=c.getBoundingClientRect(),v=st.cv;return {x:(x-r.left-v.x)/v.k,y:(y-r.top-v.y)/v.k}};
+  stPal.querySelectorAll('.tool[data-k]').forEach(el=>{const k=el.dataset.k;dragSource(el,{onTap:()=>addPart(n,k,null),onDrop:(x,y)=>{const p=toPlate(x,y);if(p)addPart(n,k,p);}});});
+  stPal.querySelectorAll('.tool[data-kt]').forEach(el=>{const t=el.dataset.kt;dragSource(el,{onTap:()=>tapTerm(n,t),onDrop:(x,y)=>{const p=toPlate(x,y);if(p)dropTerm(n,t,p);}});});
   stPal.querySelectorAll('.sw').forEach(b=>b.onclick=()=>{st.wc=b.dataset.wc;palCab(n);});
   $('#f_mm').onchange=e=>{st.mm=e.target.value;};
 }
 function nearestRail(y){return RAILS.reduce((a,b)=>Math.abs(b-y)<Math.abs(a-y)?b:a)}
+function placePart(n,p,pos){const {w}=partDim(n,p);
+  if(pos){const r=nearestRail(pos.y);p.y=Math.abs(r-pos.y)<110?r:Math.round(pos.y);p.x=Math.min(PLW-46-w/2,Math.max(46+w/2,Math.round(pos.x)));}
+  else{for(const r of RAILS){const right=Math.max(46,...n.cab.parts.filter(q=>q.y===r).map(q=>q.x+partDim(n,q).w/2));if(right+8+w<=PLW-46){p.x=right+8+w/2;p.y=r;break;}}}}
 function addPart(n,k,pos){
   if(k==='rtu'&&n.cab.parts.some(p=>p.kind==='rtu')){toast('Die Fernwirkstation ist schon im Schaltschrank.');return}
-  const p={id:sid('c'),kind:k,x:PLW/2,y:RAILS[0],bmk:nextBmk(n,PARTS[k].pre),typ:'',desc:''};
+  const d=PARTS[k],p={id:sid('c'),kind:k,x:PLW/2,y:RAILS[0],bmk:nextBmk(n,d.pre),typ:'',desc:''};
   if(k==='mu')Object.assign(p,{range:'0–10',unit:'m'});
-  const {w}=partDim(n,p);
-  if(pos){const r=nearestRail(pos.y);p.y=Math.abs(r-pos.y)<110?r:Math.round(pos.y);p.x=Math.min(PLW-46-w/2,Math.max(46+w/2,Math.round(pos.x)));}
-  else{for(const r of RAILS){const right=Math.max(46,...n.cab.parts.filter(q=>q.y===r).map(q=>q.x+partDim(n,q).w/2));if(right+8+w<=PLW-46){p.x=right+8+w/2;p.y=r;break;}}}
-  n.cab.parts.push(p);st.sel={k:'part',id:p.id};renderStation();}
+  if(d.col)p.col=d.col;
+  if(k==='kl')Object.assign(p,{terms:[],tech:'Push-in',num:'fort',start:1});
+  placePart(n,p,pos);n.cab.parts.push(p);st.sel={k:'part',id:p.id};renderStation();return p;}
+function klAt(n,pos){return n.cab.parts.find(p=>{if(p.kind!=='kl')return false;const {w}=partDim(n,p);return Math.abs(pos.x-p.x)<=w/2+14&&Math.abs(pos.y-p.y)<=KH/2+16});}
+function insertTerm(n,p,typ,idx){const prev=p.terms[Math.max(0,Math.min(idx,p.terms.length)-1)];
+  const t=newTerm(typ,typ==='pe'?'4':(prev&&prev.typ!=='pe'?prev.mm:'2,5'));p.terms.splice(idx,0,t);
+  const {w}=partDim(n,p);if(p.x+w/2>PLW-46)p.x=Math.max(46+w/2,PLW-46-w/2);
+  st.sel={k:'part',id:p.id,t:t.id};renderStation();}
+function dropTerm(n,typ,pos){const p=klAt(n,pos);
+  if(p){const L=klLayout(p),x0=p.x-L.W/2,idx=L.cols.filter(c=>x0+c.x+c.w/2<pos.x).length;insertTerm(n,p,typ,idx);return}
+  const np=addPart(n,'kl',pos);np.x=Math.max(np.x,46+20);insertTerm(n,np,typ,0);}
+function tapTerm(n,typ){const s=st.sel,p=s&&s.k==='part'&&n.cab.parts.find(q=>q.id===s.id&&q.kind==='kl');
+  if(p){const i=s.t?p.terms.findIndex(t=>t.id===s.t)+1:p.terms.length;insertTerm(n,p,typ,i<=0?p.terms.length:i);return}
+  const np=addPart(n,'kl',null);insertTerm(n,np,typ,0);}
 function addWire(n,a,b){
   if(sameRef(a,b)){drawCab();return}
   if(n.cab.wires.some(w=>(sameRef(w.a,a)&&sameRef(w.b,b))||(sameRef(w.a,b)&&sameRef(w.b,a)))){toast('Diese Verbindung gibt es schon.');drawCab();return}
@@ -1091,18 +1358,55 @@ function workCab(n){
   $('#czo').onclick=()=>zb(1/1.2);$('#czi').onclick=()=>zb(1.2);$('#czf').onclick=()=>{fitCab();drawCab();};
   if(!st.cv){st.cv={x:0,y:0,k:.5};requestAnimationFrame(()=>{fitCab();drawCab();});}
   drawCab();}
+function accSVG(p,d,x0,y0,w,hh){const cx=p.x,cy=y0+hh*0.34,col=p.col&&LCOL[p.col]?LCOL[p.col][1]:'#2f9e44',r=Math.min(w,hh)*0.22;
+  switch(d.acc){
+    case 'lcd':return `<rect class="lcd" x="${x0+6}" y="${y0+12}" width="${w-12}" height="${Math.min(16,hh*0.22)}" rx="1"/>`;
+    case 'led':return `<circle cx="${x0+8}" cy="${y0+16}" r="2.4" style="fill:#4cc95e"/>`;
+    case 'test':return `<rect x="${x0+w-14}" y="${y0+16}" width="8" height="6" rx="1" style="fill:#e8b70e"/>`;
+    case 'dial':return `<circle cx="${cx}" cy="${cy}" r="${r}" style="fill:#25282b"/><line x1="${cx}" y1="${cy}" x2="${cx}" y2="${cy-r}" style="stroke:#e8e8e8;stroke-width:1.4"/>`;
+    case 'knob':return `<circle cx="${cx}" cy="${cy}" r="${r+1}" style="fill:#25282b"/><rect x="${cx-r}" y="${cy-1.6}" width="${2*r}" height="3.2" style="fill:#e8e8e8"/>`;
+    case 'btn':return `<circle cx="${cx}" cy="${cy}" r="${r+2}" style="fill:#c9ced1;stroke:#707a80"/><circle cx="${cx}" cy="${cy}" r="${r}" style="fill:${col}"/>`;
+    case 'lamp':return `<circle cx="${cx}" cy="${cy}" r="${r+2}" style="fill:#c9ced1;stroke:#707a80"/><circle cx="${cx}" cy="${cy}" r="${r}" style="fill:${col};opacity:.9"/><circle cx="${cx-r/3}" cy="${cy-r/3}" r="${r/3}" style="fill:#fff;opacity:.6"/>`;
+    case 'nothalt':return `<rect x="${x0+3}" y="${y0+4}" width="${w-6}" height="${w-6}" rx="3" style="fill:#e8c60e"/><circle cx="${cx}" cy="${y0+4+(w-6)/2}" r="${(w-6)*0.34}" style="fill:#d23a2e"/>`;
+    case 'hs':return `<rect x="${x0+6}" y="${y0+14}" width="${w-12}" height="${w-12}" style="fill:#e8c60e"/><rect x="${cx-4}" y="${y0+10}" width="8" height="${w-4}" rx="2" style="fill:#d23a2e"/>`;
+    case 'nh':return `<rect x="${x0+5}" y="${y0+18}" width="${w-10}" height="${hh*0.42}" rx="2" style="fill:#25282b"/>`;
+    case 'fan':return `<circle cx="${cx}" cy="${p.y-4}" r="${w*0.32}" style="fill:none;stroke:#9aa3a8;stroke-width:1.2"/>${[0,1,2,3].map(i=>`<line x1="${cx-w*0.32}" x2="${cx+w*0.32}" y1="${p.y-4-w*0.18+i*w*0.12}" y2="${p.y-4-w*0.18+i*w*0.12}" style="stroke:#9aa3a8"/>`).join('')}`;
+    case 'ex':return `<rect x="${x0}" y="${y0+14}" width="${w}" height="8" style="fill:#2f6fd0"/>`;
+    case 'pe':return `<rect x="${x0}" y="${y0}" width="${w}" height="${hh}" rx="2" style="fill:#3f9b3a"/><rect x="${x0}" y="${y0+hh/2-2}" width="${w}" height="4" style="fill:#e5c919"/>`;
+    case 'nb':return `<rect x="${x0}" y="${y0}" width="${w}" height="${hh}" rx="2" style="fill:#3d7fc4"/>`;}
+  return '';}
+function klSVG(n,p,sel){const L=klLayout(p),nr=klNumbers(p),x0=p.x-L.W/2,y0=p.y-KH/2,selT=sel&&st.sel.t;
+  let s=`<g class="part${sel?' sel':''}" data-part="${p.id}"><text class="bmk" x="${x0}" y="${y0-6}">${esc(p.bmk)}</text>
+    <rect class="kend" x="${x0}" y="${y0+4}" width="${KEND}" height="${KH-8}" rx="1"/><rect class="kend" x="${x0+L.W-KEND}" y="${y0+4}" width="${KEND}" height="${KH-8}" rx="1"/>`;
+  if(!p.terms.length)s+=`<rect class="dev" x="${x0}" y="${y0}" width="${L.W}" height="${KH}" style="fill:none;stroke-dasharray:3 3"/>`;
+  L.cols.forEach((c,i)=>{const t=c.t,X=x0+c.x,kd=KLT[t.typ],lab=nr[t.id],txt=kd.lv>1?lab[0]+'–'+lab[kd.lv-1]:lab[0],rot=txt.length>2;
+    s+=`<g data-kt="${p.id}|${t.id}"><rect class="kt ${kd.cls}${selT===t.id?' tsel':''}" x="${X}" y="${y0}" width="${c.w}" height="${KH}" rx="1"/>`;
+    if(t.typ==='pe')s+=`<rect x="${X}" y="${y0+KH*0.62}" width="${c.w}" height="4" style="fill:#e5c919;pointer-events:none"/>`;
+    if(t.typ==='tr')s+=`<rect x="${X+2}" y="${y0+KH-34}" width="${c.w-4}" height="7" rx="1" style="fill:#e07a1f;pointer-events:none"/>`;
+    if(t.typ==='si')s+=`<rect x="${X+1.5}" y="${y0+KH-36}" width="${c.w-3}" height="12" rx="1.5" style="fill:#d9dde0;pointer-events:none"/>`;
+    s+=`<rect class="kmark" x="${X+1}" y="${y0+30}" width="${c.w-2}" height="16"/>`;
+    s+=rot?`<text class="kno" transform="translate(${X+c.w/2} ${y0+38}) rotate(-90)" text-anchor="middle" dy="2.3">${esc(txt)}</text>`:`<text class="kno" x="${X+c.w/2}" y="${y0+40.5}" text-anchor="middle">${esc(txt)}</text>`;
+    s+='</g>';
+    if(t.br&&L.cols[i+1])s+=`<line class="kbr" x1="${X+c.w/2}" x2="${x0+L.cols[i+1].x+L.cols[i+1].w/2}" y1="${y0+27}" y2="${y0+27}"/>`;});
+  return s+'</g>';}
 function partSVG(n,p,sel){
+  if(p.kind==='kl')return klSVG(n,p,sel);
   const {w,h:hh}=partDim(n,p),d=PARTS[p.kind],x0=p.x-w/2,y0=p.y-hh/2,dk=d.dk?' dk':'',l=d.dk?' l':'';
   let s=`<g class="part${sel?' sel':''}" data-part="${p.id}"><rect class="dev${dk}" x="${x0}" y="${y0}" width="${w}" height="${hh}" rx="2"/>`;
   if(p.kind==='rtu'){const L=rtuLayout(n);
     s+=`<text class="bmk" x="${x0}" y="${y0-6}">${esc(p.bmk)}  Fernwirkstation</text>`;
     if(!L.cols.length)s+=`<text class="pk" x="${p.x}" y="${p.y+3}" text-anchor="middle">Rack leer: Module unter „Fernwirktechnik“ stecken</text>`;
     for(const c of L.cols){const cx=x0+c.x;s+=`<rect class="modc" x="${cx+1}" y="${y0+1}" width="${c.w-2}" height="${hh-2}"/><rect class="modh cat-${c.d.cat}" x="${cx+1}" y="${y0+1}" width="${c.w-2}" height="5"/><text class="bmk" x="${cx+c.w/2}" y="${y0+42}" text-anchor="middle" style="font-size:9px">${c.d.s}</text><text class="pk" x="${cx+c.w/2}" y="${y0+54}" text-anchor="middle">S${c.m.slot+1}</text>`;}
-  }else if(w<30)s+=`<text class="bmk${l}" transform="translate(${p.x} ${p.y}) rotate(-90)" text-anchor="middle" dy="3.5">${esc(p.bmk)}</text>`;
-  else s+=`<text class="bmk${l}" x="${p.x}" y="${p.y}" text-anchor="middle">${esc(p.bmk)}</text><text class="pk${l}" x="${p.x}" y="${p.y+11}" text-anchor="middle">${d.s}</text>`;
+    return s+'</g>';}
+  s+=accSVG(p,d,x0,y0,w,hh);
+  const bar=d.acc==='pe'||d.acc==='nb';
+  if(bar)s+=`<text class="bmk l" x="${x0+4}" y="${y0-4}" style="fill:var(--dev-ink)">${esc(p.bmk)} ${d.s}</text>`;
+  else if(w<30)s+=`<text class="bmk${l}" transform="translate(${p.x} ${d.acc?y0+hh*0.66:p.y}) rotate(-90)" text-anchor="middle" dy="3.5">${esc(p.bmk)}</text>`;
+  else{const ty=d.acc&&!['led','test','lcd'].includes(d.acc)?y0+hh*0.66:d.acc==='lcd'?y0+hh*0.62:p.y;
+    s+=`<text class="bmk${l}" x="${p.x}" y="${ty}" text-anchor="middle">${esc(p.bmk)}</text><text class="pk${l}" x="${p.x}" y="${ty+11}" text-anchor="middle">${d.s}</text>`;}
   return s+'</g>';}
-function termSVG(n,p){const {w}=partDim(n,p),lbl=p.kind==='rtu'||w>=30,l=PARTS[p.kind].dk?' l':'';let s='';
-  for(const t of portsOf(n,p)){s+=`<circle class="thit" data-term="${p.id}|${t.id}" cx="${t.x}" cy="${t.y}" r="6"><title>${esc(p.bmk+':'+t.label+(t.sig?' · '+t.sig:''))}</title></circle><circle class="term" cx="${t.x}" cy="${t.y}" r="3.4"/>`;
+function termSVG(n,p){const {w}=partDim(n,p),d=PARTS[p.kind],lbl=p.kind==='rtu'||(p.kind!=='kl'&&w>=30&&d.acc!=='pe'&&d.acc!=='nb'),l=d.dk?' l':'';let s='';
+  for(const t of portsOf(n,p)){s+=`<circle class="thit" data-term="${p.id}|${t.id}" cx="${t.x}" cy="${t.y}" r="${p.kind==='kl'?4.6:6}"><title>${esc(fullBmk(n,p)+':'+t.label+(t.side?' · '+t.side:'')+(t.sig?' · '+t.sig:''))}</title></circle><circle class="term" cx="${t.x}" cy="${t.y}" r="${p.kind==='kl'?2.8:3.4}"/>`;
     if(lbl)s+=`<text class="tl${l}" x="${t.x}" y="${t.y+(t.dir<0?12:-7)}" text-anchor="middle">${esc(t.lb)}</text>`;}
   return s;}
 function drawCab(){const n=stNode(),g=$('#cabW');if(!n||!g)return;const v=st.cv||{x:0,y:0,k:.5};
@@ -1122,15 +1426,16 @@ function bindCab(el){
   el.addEventListener('pointerdown',e=>{if(e.button>0)return;ptrs.set(e.pointerId,{x:e.clientX,y:e.clientY});try{el.setPointerCapture(e.pointerId)}catch(_){}
     if(ptrs.size===2){const [a,b]=[...ptrs.values()];pin={d:Math.hypot(a.x-b.x,a.y-b.y)};dr=null;st.tmp=null;return}
     const n=stNode(),p=toW(e.clientX,e.clientY);
-    const term=e.target.closest('[data-term]'),part=e.target.closest('[data-part]'),wire=e.target.closest('[data-wire]');
+    const term=e.target.closest('[data-term]'),part=e.target.closest('[data-part]'),wire=e.target.closest('[data-wire]'),kt=e.target.closest('[data-kt]');
     if(term){const [pid,tid]=term.dataset.term.split('|');dr={m:'wire'};st.tmp={from:{p:pid,t:tid},x:p.x,y:p.y};drawCab();return}
-    if(part){const q=n.cab.parts.find(o=>o.id===part.dataset.part);dr={m:'move',q,dx:p.x-q.x,dy:p.y-q.y};if(!(st.sel&&st.sel.id===q.id)){st.sel={k:'part',id:q.id};stRenderProps();}drawCab();return}
+    if(part){const q=n.cab.parts.find(o=>o.id===part.dataset.part),tid=kt?kt.dataset.kt.split('|')[1]:undefined;dr={m:'move',q,dx:p.x-q.x,dy:p.y-q.y,sx:p.x,sy:p.y};
+      if(!(st.sel&&st.sel.id===q.id&&st.sel.t===tid)){st.sel={k:'part',id:q.id,t:tid};stRenderProps();}drawCab();return}
     if(wire){st.sel={k:'wire',id:wire.dataset.wire};stRenderProps();drawCab();return}
     dr={m:'pan',sx:e.clientX,sy:e.clientY,vx:st.cv.x,vy:st.cv.y,moved:false};});
   el.addEventListener('pointermove',e=>{if(!ptrs.has(e.pointerId))return;ptrs.set(e.pointerId,{x:e.clientX,y:e.clientY});
     if(pin&&ptrs.size===2){const [a,b]=[...ptrs.values()],d=Math.hypot(a.x-b.x,a.y-b.y),r=el.getBoundingClientRect();zoomV(st.cv,(a.x+b.x)/2-r.left,(a.y+b.y)/2-r.top,d/pin.d,.15,4);pin.d=d;drawCab();return}
     if(!dr)return;const p=toW(e.clientX,e.clientY);
-    if(dr.m==='move'){dr.q.x=Math.round((p.x-dr.dx)/2)*2;dr.q.y=Math.round(p.y-dr.dy);drawCab();}
+    if(dr.m==='move'){if(Math.hypot(p.x-dr.sx,p.y-dr.sy)<3)return;dr.q.x=Math.round((p.x-dr.dx)/2)*2;dr.q.y=Math.round(p.y-dr.dy);drawCab();}
     else if(dr.m==='wire'){st.tmp.x=p.x;st.tmp.y=p.y;drawCab();}
     else{const dx=e.clientX-dr.sx,dy=e.clientY-dr.sy;if(Math.abs(dx)+Math.abs(dy)>4)dr.moved=true;st.cv.x=dr.vx+dx;st.cv.y=dr.vy+dy;drawCab();}});
   const end=e=>{ptrs.delete(e.pointerId);if(pin){if(ptrs.size<2)pin=null;dr=null;return}if(!dr)return;const n=stNode();
@@ -1142,12 +1447,56 @@ function bindCab(el){
   el.addEventListener('pointerup',end);el.addEventListener('pointercancel',end);
   el.addEventListener('wheel',e=>{e.preventDefault();const r=el.getBoundingClientRect();zoomV(st.cv,e.clientX-r.left,e.clientY-r.top,e.deltaY<0?1.12:1/1.12,.15,4);drawCab();},{passive:false});
 }
+/* Klemmleisten: Eigenschaften und Klemmenplan */
+function wiresAt(n,pid,portId){return n.cab.wires.filter(w=>(w.a.p===pid&&w.a.t===portId)||(w.b.p===pid&&w.b.t===portId)).map(w=>refName(n,w.a.p===pid&&w.a.t===portId?w.b:w.a))}
+function klPanel(n,p){
+  const nr=klNumbers(p),t=st.sel.t&&p.terms.find(x=>x.id===st.sel.t),fb=fullBmk(n,p);
+  const rows=[];for(const x of p.terms){const kd=KLT[x.typ];for(let k=0;k<kd.lv;k++){rows.push([nr[x.id][k],kd.s+(kd.lv>1?' E'+(k+1):'')+(x.typ==='si'&&x.fuse?' '+x.fuse:''),wiresAt(n,p.id,x.id+':t'+k).join(', ')||'–',wiresAt(n,p.id,x.id+':b'+k).join(', ')||'–',x.br&&k===0?'→ nächste':''])}}
+  const cnt={};for(const x of p.terms)cnt[x.typ]=(cnt[x.typ]||0)+1;
+  let h=`<div class="kind">Klemmleiste</div><h2>${esc(fb)}</h2>
+  <p>${p.terms.length} Klemmen${Object.keys(cnt).length?' · '+Object.entries(cnt).map(([k,v])=>v+'× '+KLT[k].s).join(', '):''}. Klemmen werden als <b>${esc(fb)}:Nr</b> bezeichnet.</p>`;
+  if(t){const kd=KLT[t.typ],i=p.terms.indexOf(t);
+    h+=`<div class="sect">Klemme ${esc(p.bmk)}:${esc(nr[t.id].join(', '))}</div>
+    <div class="fld wide"><label for="kv_typ">Klemmentyp</label><select id="kv_typ" data-kv="typ">${Object.entries(KLT).map(([k,d])=>`<option value="${k}"${k===t.typ?' selected':''}>${d.n}</option>`).join('')}</select></div>
+    <div class="fld wide"><label for="kv_nr">Klemmenbezeichnung</label><input id="kv_nr" data-kv="nr" value="${esc(t.nr)}" placeholder="automatisch: ${esc(nr[t.id].join(', '))}"></div>
+    <div class="fld"><label for="kv_mm">Nennquerschnitt</label><div class="in"><select id="kv_mm" data-kv="mm">${Object.keys(KMM).map(m=>`<option${m===t.mm?' selected':''}>${m}</option>`).join('')}</select><span class="u">mm²</span></div></div>
+    ${t.typ==='si'?`<div class="fld wide"><label for="kv_fuse">Sicherungseinsatz</label><input id="kv_fuse" data-kv="fuse" value="${esc(t.fuse)}" placeholder="z. B. 2 A träge, 5×20"></div>`:''}
+    <label class="chk"><input type="checkbox" data-kv="br" ${t.br?'checked':''} ${i>=p.terms.length-1?'disabled':''}> Brücke zur nächsten Klemme</label>
+    <div class="row2"><button class="btn" data-ka="left" ${i===0?'disabled':''}>← Nach links</button><button class="btn" data-ka="right" ${i>=p.terms.length-1?'disabled':''}>Nach rechts →</button><button class="btn danger" data-ka="del">Klemme entfernen</button></div>`;}
+  else h+=`<p>Eine Klemme in der Leiste antippen, um Typ, Bezeichnung und Querschnitt einzustellen.</p>`;
+  h+=`<div class="sect">Klemmleiste</div>
+  ${tf('Betriebsmittelkennzeichen','bmk',p.bmk,'-X1')}${tf('Funktion','desc',p.desc,'z. B. Steuerspannung 230 V AC')}
+  ${sf('Anschlusstechnik','tech',p.tech,KTECH.map(x=>[x,x]))}
+  ${sf('Nummerierung','num',p.num,[['fort','fortlaufend, auch PE und N'],['pen','fortlaufend, PE- und N-Klemmen als „PE“ / „N“']])}
+  ${nf('Erste Klemmennummer','start',p.start,'',1)}
+  <div class="row2"><button class="btn" data-ka="add5">+ 5 Durchgangsklemmen</button><button class="btn" data-ka="addpe">+ PE</button><button class="btn" data-ka="addn">+ N</button></div>
+  <div class="sect">Klemmenplan</div>${tbl(['Klemme','Typ','innen (oben)','außen (unten)','Brücke'],rows,1)}
+  <p>Bezeichnung nach DIN EN IEC 81346 (=Anlage +Ort -Betriebsmittel) und DIN EN 61666 (Anschluss nach dem Doppelpunkt). Anlage und Ort stellst du ohne Auswahl in der Schrankübersicht ein. Mehrstöckige Klemmen erhalten je Ebene eine eigene Nummer. Eine eigene Bezeichnung für mehrere Ebenen mit Komma trennen.</p>
+  <div class="row2"><button class="btn danger" data-sa="del">Klemmleiste entfernen</button></div>`;
+  return h;}
+stProps.addEventListener('input',e=>{const t=e.target,k=t.dataset.kv;if(!k)return;const n=stNode(),p=stSelObj();if(!n||!p||p.kind!=='kl')return;const x=p.terms.find(q=>q.id===st.sel.t);if(!x)return;
+  if(k==='br')x.br=t.checked;else if(k==='typ'){x.typ=t.value;if(t.value==='pe'&&x.mm==='2,5')x.mm='4';if(t.value==='si'&&!x.fuse)x.fuse='2 A';
+    const ids=new Set(portsOf(n,p).map(q=>q.id));n.cab.wires=n.cab.wires.filter(w=>!(w.a.p===p.id&&!ids.has(w.a.t))&&!(w.b.p===p.id&&!ids.has(w.b.t)));}
+  else x[k]=t.value;
+  drawCab();if(t.tagName==='SELECT'||t.type==='checkbox')stRenderProps();});
+stProps.addEventListener('change',e=>{if(e.target.dataset.kv&&e.target.tagName==='INPUT'&&e.target.type!=='checkbox')stRenderProps();});
+stProps.addEventListener('click',e=>{const a=e.target.closest('[data-ka]');if(!a)return;const n=stNode(),p=stSelObj();if(!n||!p||p.kind!=='kl')return;
+  const i=p.terms.findIndex(q=>q.id===st.sel.t),act=a.dataset.ka;
+  if(act==='left'&&i>0){[p.terms[i-1],p.terms[i]]=[p.terms[i],p.terms[i-1]];}
+  else if(act==='right'&&i>=0&&i<p.terms.length-1){[p.terms[i+1],p.terms[i]]=[p.terms[i],p.terms[i+1]];}
+  else if(act==='del'&&i>=0){const id=p.terms[i].id;p.terms.splice(i,1);n.cab.wires=n.cab.wires.filter(w=>!(w.a.p===p.id&&w.a.t.startsWith(id+':'))&&!(w.b.p===p.id&&w.b.t.startsWith(id+':')));st.sel={k:'part',id:p.id};}
+  else if(act==='add5'){const at=i>=0?i+1:p.terms.length;p.terms.splice(at,0,...Array.from({length:5},()=>newTerm('dg')));}
+  else if(act==='addpe'||act==='addn'){const at=i>=0?i+1:p.terms.length;p.terms.splice(at,0,newTerm(act==='addpe'?'pe':'n'));}
+  const {w}=partDim(n,p);p.x=Math.min(PLW-46-w/2,Math.max(46+w/2,p.x));
+  drawCab();stRenderProps();});
+stProps.addEventListener('input',e=>{const k=e.target.dataset.cab;if(!k)return;const n=stNode();if(!n)return;n.cab[k]=e.target.value.replace(/^[=+]/,'').trim();});
+stProps.addEventListener('change',e=>{if(e.target.dataset.cab)stRenderProps();});
 
 /* Eigenschaften der Station */
 const nf=(label,key,val,unit,step)=>`<div class="fld"><label for="sv_${key}">${label}</label><div class="in"><input id="sv_${key}" data-v="${key}" type="number" inputmode="decimal" value="${val}" step="${step||1}" min="0"><span class="u">${unit}</span></div></div>`;
 const tf=(label,key,val,ph)=>`<div class="fld wide"><label for="sv_${key}">${label}</label><input id="sv_${key}" data-v="${key}" value="${esc(val??'')}" placeholder="${esc(ph||'')}"></div>`;
 const sf=(label,key,val,opts)=>`<div class="fld wide"><label for="sv_${key}">${label}</label><select id="sv_${key}" data-v="${key}">${opts.map(([v,t])=>`<option value="${esc(v)}"${String(v)===String(val)?' selected':''}>${esc(t)}</option>`).join('')}</select></div>`;
-const tbl=(head,rows)=>rows.length?`<div class="tblw"><table class="tbl"><thead><tr>${head.map(h=>`<th>${h}</th>`).join('')}</tr></thead><tbody>${rows.map(r=>`<tr>${r.map((c,i)=>`<td${i<2?' class="m"':''}>${esc(c)}</td>`).join('')}</tr>`).join('')}</tbody></table></div>`:'<p>Noch keine Einträge.</p>';
+const tbl=(head,rows,mc=2)=>rows.length?`<div class="tblw"><table class="tbl"><thead><tr>${head.map(h=>`<th>${h}</th>`).join('')}</tr></thead><tbody>${rows.map(r=>`<tr>${r.map((c,i)=>`<td${i<mc?' class="m"':''}>${esc(c)}</td>`).join('')}</tr>`).join('')}</tbody></table></div>`:'<p>Noch keine Einträge.</p>';
 function stRenderProps(){
   const n=stNode(),o=stSelObj(),s=st.sel,el=stProps;if(!n)return;
   const del=t=>`<div class="row2"><button class="btn danger" data-sa="del">${t}</button></div>`;
@@ -1168,10 +1517,11 @@ function stRenderProps(){
     ${m.kind==='com'?tf('Gegenstelle','peer',m.peer,'Leitstelle oder VPN-Gateway'):''}
     ${d.ch?nf('Startadresse (IOA)','addr',m.addr||0,'',1)+`<div class="sect">Kanalbelegung</div><div class="chlist">${m.ch.map((c,i)=>`<label for="sv_ch${i}">${d.io}${i+1}</label><input id="sv_ch${i}" data-v="ch${i}" value="${esc(c)}" placeholder="Reserve">`).join('')}</div>`:''}
     ${del('Modul entfernen')}`;
+  }else if(o&&s.k==='part'&&o.kind==='kl'){el.innerHTML=klPanel(n,o);
   }else if(o&&s.k==='part'){const p=o,d=PARTS[p.kind];
     const conn=portsOf(n,p).map(t=>{const ws=n.cab.wires.filter(w=>(w.a.p===p.id&&w.a.t===t.id)||(w.b.p===p.id&&w.b.t===t.id)).map(w=>refName(n,sameRef(w.a,{p:p.id,t:t.id})?w.b:w.a));return [t.label,t.sig||'',ws.join(', ')||'–']});
-    el.innerHTML=`<div class="kind">${d.n}</div><h2>${esc(p.bmk)}</h2>
-    ${tf('Betriebsmittelkennzeichen','bmk',p.bmk)}${tf('Hersteller / Typ','typ',p.typ)}${tf('Funktion','desc',p.desc,'z. B. Ansteuerung P1')}
+    el.innerHTML=`<div class="kind">${d.n}</div><h2>${esc(fullBmk(n,p))}</h2>
+    ${tf('Betriebsmittelkennzeichen','bmk',p.bmk)}${d.col?sf('Farbe','col',p.col,Object.entries(LCOL).map(([k,c])=>[k,c[0]])):''}${tf('Hersteller / Typ','typ',p.typ)}${tf('Funktion','desc',p.desc,'z. B. Ansteuerung P1')}
     ${p.kind==='mu'?tf('Messbereich','range',p.range)+tf('Einheit','unit',p.unit):''}
     ${p.kind==='rtu'?'<p>Die Module kommen aus dem Rack. Änderungen unter „Fernwirktechnik“ erscheinen hier sofort.</p><div class="row2"><button class="btn" data-sa="torack">Zum Rack</button></div>':''}
     <div class="sect">Klemmstellen</div>${tbl(['Klemme','Signal','verbunden mit'],conn)}${del('Bauteil entfernen')}`;
@@ -1184,6 +1534,7 @@ function stRenderProps(){
     <div class="live"><span>Förderleistung ohne Reserve</span><b>${fmt(avail)} m³/h</b><span>Installierte Leistung</span><b>${fmt(kw,1)} kW</b></div>
     <div class="sect">Rollen im Automatikbetrieb</div>
     ${n.type==='pw'||n.type==='brunnen'?`<p><b>Grundlast</b> läuft, sobald das Pumpwerk einschaltet.<br><b>Spitzenlast</b> schaltet zu, wenn der Führungsbehälter 10 % unter dem Einschaltpunkt liegt, und ab der Mitte zwischen Ein- und Ausschaltpunkt wieder ab.<br><b>Reserve</b> springt ein, wenn eine Grundlastpumpe gestört ist.</p>${n.pumps.length?'':'<p>Ohne Pumpen rechnet das Pumpwerk mit der Förderleistung aus dem Prozessbild.</p>'}`
+    :n.type==='dea'?`<p><b>Grundlast</b> läuft, sobald in der Druckzone Wasser abgenommen wird.<br><b>Spitzenlast</b> schaltet zu, wenn der Bedarf größer ist als die Leistung der Grundlastpumpen.<br><b>Reserve</b> springt bei Störung einer Grundlastpumpe ein.</p>`
     :`<p><b>Grundlast</b> läuft, solange der Behälter Wasser hat.<br><b>Spitzenlast</b> läuft bei Spitzenverbrauch am Morgen und Abend zu.<br><b>Reserve</b> springt bei Störung einer Grundlastpumpe ein.</p>`}
     <p>Eine Pumpe antippen, um sie zu parametrieren.</p>`;
   }else if(st.tab==='rack'){
@@ -1194,10 +1545,16 @@ function stRenderProps(){
     ${!n.rack.mods.some(m=>m.kind==='ps')&&n.rack.mods.length?'<p>Hinweis: Im Rack steckt noch kein Netzteil.</p>':''}
     <div class="sect">Signalliste</div>${tbl(['Kanal','IOA','Signal'],rows)}<p>Ein Modul antippen, um Typ und Kanalbelegung einzutragen.</p>`;
   }else{
-    const bom=n.cab.parts.map(p=>[p.bmk,PARTS[p.kind].n,p.typ||p.desc||'']).sort((a,b)=>a[0].localeCompare(b[0],'de',{numeric:true}));
+    const bom=n.cab.parts.map(p=>[p.bmk,PARTS[p.kind].n+(p.kind==='kl'?' ('+p.terms.length+' Klemmen)':''),p.typ||p.desc||'']).sort((a,b)=>a[0].localeCompare(b[0],'de',{numeric:true}));
+    const kls=n.cab.parts.filter(p=>p.kind==='kl'),kcount={};for(const p of kls)for(const t of p.terms)kcount[t.typ+'|'+t.mm]=(kcount[t.typ+'|'+t.mm]||0)+1;
     const wl=n.cab.wires.map(w=>[refName(n,w.a),refName(n,w.b),(WCOL[w.c]||WCOL.sw).n.split(' · ')[0]+' · '+w.mm+' mm²'+(w.label?' · '+w.label:'')]);
     el.innerHTML=`<div class="kind">Schaltschrank</div><h2>${n.cab.parts.length} Bauteile · ${n.cab.wires.length} Adern</h2>
-    <div class="sect">Betriebsmittelliste</div>${tbl(['BMK','Bauteil','Typ / Funktion'],bom)}
+    <div class="sect">Kennzeichnung nach DIN EN IEC 81346</div>
+    <div class="fld wide"><label for="cab_anl">Anlage (=)</label><input id="cab_anl" data-cab="anl" value="${esc(n.cab.anl)}" placeholder="z. B. WV.PW02"></div>
+    <div class="fld wide"><label for="cab_ort">Ort (+)</label><input id="cab_ort" data-cab="ort" value="${esc(n.cab.ort)}" placeholder="z. B. SK1"></div>
+    <p>Beispiel: <b>${esc(fullBmk(n,{bmk:'-X1'}))}:5</b> ist Klemme 5 der Klemmleiste -X1.</p>
+    <div class="sect">Betriebsmittelliste</div>${tbl(['BMK','Bauteil','Typ / Funktion'],bom,1)}
+    <div class="sect">Klemmenbedarf</div>${tbl(['Anzahl','Typ','Querschnitt'],Object.entries(kcount).map(([k,v])=>{const [t,mm]=k.split('|');return [v+'×',KLT[t].n,mm+' mm²']}),1)}
     <div class="sect">Verbindungsliste</div>${tbl(['Von','Nach','Ader'],wl)}`;
   }
   stLive();
@@ -1215,7 +1572,7 @@ stProps.addEventListener('click',e=>{const m=e.target.closest('[data-pmode]'),a=
   else if(a.dataset.sa==='torack'){st.tab='rack';st.sel=null;renderStation();}});
 function stLive(){const n=stNode();if(!n)return;
   const run=n.pumps.filter(p=>p.run).length,pc=n.pumps.length?' · Pumpen '+run+' / '+n.pumps.length:'';
-  $('#stLive').textContent=(n.type==='hb'||n.type==='quelle'?fmt(frac(n)*100,1)+' % · '+fmt(n.v)+' m³':n.act?'fördert '+fmt(n.qd)+' m³/h':'steht')+pc;
+  $('#stLive').textContent=(n.type==='hb'||n.type==='quelle'?fmt(frac(n)*100,1)+' % · '+fmt(n.v)+' m³':n.type==='dea'?fmt(n.pdr??n.soll,1)+' bar · '+fmt(n.qd||0)+' m³/h':n.type==='schacht'?'Durchfluss '+fmt(n.qin||0)+' m³/h':n.act?'fördert '+fmt(n.qd)+' m³/h':'steht')+pc;
   if(st.tab==='pumpen')for(const p of n.pumps){const c=stWork.querySelector(`[data-pid="${p.id}"]`);if(!c)continue;
     c.querySelector('circle.pump').setAttribute('class','pump '+pumpCls(p));const l=c.querySelector('[data-plive]');
     l.textContent=(p.stoer?'Störung':p.run?'läuft':'steht')+' · '+fmt(p.hours,1)+' h';l.className='pc-live'+(p.stoer?' alm':p.run?' on':'');}
@@ -1227,7 +1584,7 @@ function stLive(){const n=stNode();if(!n)return;
 
 /* ---------- Armaturen: Klappen und Wasserzähler ---------- */
 const ARM={klappe:1,zaehler:1};
-const TYPENAME={hb:'Hochbehälter',pw:'Pumpwerk',quelle:'Wasserquelle',brunnen:'Tiefbrunnen'};
+const TYPENAME={hb:'Hochbehälter',pw:'Pumpwerk',quelle:'Wasserquelle',brunnen:'Tiefbrunnen',dea:'Druckerhöhungsanlage',schacht:'Schieberschacht'};
 const BAUART=[['MID','MID (magnetisch-induktiv)'],['Ultraschall','Ultraschall'],['Woltmann','Woltmann']];
 function normItems(s){
   s.items=(Array.isArray(s.items)?s.items:[]).filter(it=>(it.kind==='klappe'||it.kind==='zaehler')&&(it.link?s.links.some(l=>l.id===it.link):s.nodes.some(n=>n.id===it.node)));
@@ -1271,11 +1628,11 @@ function addItem(kind,at){
 function dropItem(kind,p){let best=null;
   for(const l of S.links){const r=linkRoute(l);if(!r)continue;const pr=project(r.pts,p);if(!best||pr.d<best.d)best={l,d:pr.d,t:pr.t};}
   if(best&&best.d<34)return addItem(kind,{link:best.l.id,pos:Math.min(.94,Math.max(.06,best.t))});
-  if(kind==='zaehler'){const n=S.nodes.find(n=>n.type==='hb'&&Math.abs(p.x-n.x)<55&&p.y>n.y-50&&p.y<n.y+120);if(n)return addItem(kind,{node:n.id});}
+  if(kind==='zaehler'){const n=S.nodes.find(n=>(n.type==='hb'||n.type==='dea')&&Math.abs(p.x-n.x)<55&&p.y>n.y-50&&p.y<n.y+120);if(n)return addItem(kind,{node:n.id});}
   toast(kind==='klappe'?'Klappen auf eine Leitung ziehen.':'Zähler auf eine Leitung oder an einen Hochbehälter ziehen.');}
 function tapItem(kind){const s=S.sel;
   if(s&&s.kind==='link')return addItem(kind,{link:s.id,pos:.5});
-  if(kind==='zaehler'&&s&&s.kind==='node'&&byId(s.id)?.type==='hb')return addItem(kind,{node:s.id});
+  if(kind==='zaehler'&&s&&s.kind==='node'&&['hb','dea'].includes(byId(s.id)?.type))return addItem(kind,{node:s.id});
   toast(kind==='klappe'?'Erst eine Leitung antippen und dann „Klappe“ wählen, oder die Klappe direkt auf die Leitung ziehen.':'Erst eine Leitung oder einen Hochbehälter antippen und dann „Wasserzähler“ wählen.');}
 function itemsSVG(){let h='';
   for(const it of S.items){const sel=S.sel&&S.sel.kind==='item'&&S.sel.id===it.id;let P;
@@ -1370,6 +1727,7 @@ $('#ioLoad').onclick=()=>{try{const s=JSON.parse($('#ioText').value); if(!valid(
 let toastT;
 function toast(msg){const t=$('#toast');t.textContent=msg;t.hidden=false;clearTimeout(toastT);toastT=setTimeout(()=>t.hidden=true,2600);}
 
+Object.defineProperty(window,'leitwarteState',{get:()=>S});
 /* ---------- Start & Takt ---------- */
 const reduced=matchMedia('(prefers-reduced-motion: reduce)').matches;
 S=load(); S=S?normalize(S):exampleState(); setSpeed(S.speed);
@@ -1390,7 +1748,7 @@ requestAnimationFrame(frame);
 
 /* ---------- Windows-Programm: Dateien ---------- */
 const api=window.leitwarte;
-function serialize(){return JSON.stringify({format:'leitwarte-wasser',version:3,nodes:S.nodes.map(({qin,qout,over,fault,qd,short,act,...n})=>n),links:S.links.map(({flow,...l})=>l),items:S.items.map(({qm,...i})=>i),t:S.t,seq:S.seq},null,1)}
+function serialize(){return JSON.stringify({format:'leitwarte-wasser',version:4,nodes:S.nodes.map(({qin,qout,over,fault,qd,short,act,...n})=>n),links:S.links.map(({flow,...l})=>l),items:S.items.map(({qm,...i})=>i),t:S.t,seq:S.seq},null,1)}
 function applyData(s){if(!valid(s))return false;if(!stEl.hidden)closeStation();const sp=S.speed;S=normalize(s);setSpeed(sp);fit();select(null);$('#empty').hidden=S.nodes.length>0;return true}
 if(api){
   let curPath=null;
