@@ -294,6 +294,14 @@ input[type=range]{width:100%;accent-color:var(--water)}
 .kend{fill:var(--k-end)}
 .kbr{stroke:#c8302a;stroke-width:3;stroke-linecap:round;pointer-events:none}
 .lcd{fill:var(--lcd);stroke:var(--dev-edge);stroke-width:.6}
+.stpal{scrollbar-gutter:stable;overscroll-behavior:contain}
+.stpal .tool{touch-action:pan-y}
+.pgh{display:flex;align-items:center;justify-content:space-between;gap:8px;width:100%;border:0;border-bottom:1px solid var(--line);background:none;padding:6px 0;
+  font-size:10.5px;color:var(--muted);text-transform:uppercase;letter-spacing:.09em;font-weight:600;text-align:left}
+.pgh::after{content:"";width:7px;height:7px;border-right:1.5px solid currentColor;border-bottom:1.5px solid currentColor;transform:rotate(-45deg);margin-right:4px;transition:transform .15s}
+.pgh[aria-expanded="true"]::after{transform:rotate(45deg)}
+.pgh small{margin-left:auto;font:500 11px var(--f-mono);letter-spacing:0;color:var(--muted)}
+.pgh:hover{color:var(--ink)}
 .stpal input[type=search]{width:100%;border:1px solid var(--line);border-radius:4px;background:var(--panel2);padding:5px 8px}
 .btn:disabled{opacity:.45;cursor:default}
 @media (prefers-reduced-motion: reduce){.water{stroke-dasharray:none}}
@@ -1151,7 +1159,7 @@ function dragSource(el,{onTap,onDrop}){
   el.addEventListener('pointermove',e=>{if(!pd)return;
     if(!pd.moved&&Math.hypot(e.clientX-pd.sx,e.clientY-pd.sy)>6){pd.moved=true;const g=el.cloneNode(true);g.style.width=el.offsetWidth+'px';g.style.height=el.offsetHeight+'px';g.style.margin='0';g.classList.add('ghost');document.body.appendChild(g);pd.g=g;}
     if(pd.g)pd.g.style.transform=`translate(${e.clientX}px,${e.clientY}px) translate(-50%,-50%)`;});
-  const end=e=>{if(!pd)return;const p=pd;pd=null;if(p.g)p.g.remove();if(!p.moved){onTap&&onTap();return}if(e.type==='pointerup')onDrop(e.clientX,e.clientY);};
+  const end=e=>{if(!pd)return;const p=pd;pd=null;if(p.g)p.g.remove();if(!p.moved){if(e.type==='pointerup'&&onTap)onTap();return}if(e.type==='pointerup')onDrop(e.clientX,e.clientY);};
   el.addEventListener('pointerup',end);el.addEventListener('pointercancel',end);
 }
 
@@ -1302,7 +1310,7 @@ function partIcon(k){const d=PARTS[k];
   return `<svg width="34" height="32" viewBox="0 0 34 32" aria-hidden="true"><rect x="${17-w/2}" y="${16-hh/2}" width="${w}" height="${hh}" rx="1.5" style="fill:var(${d.dk?'--dev-dk':'--dev'});stroke:var(--dev-edge)"/>${k==='rtu'?'<rect x="2" y="9" width="30" height="4" style="fill:var(--c-io)"/>':''}${a}</svg>`;}
 function termIcon(t){const c={pe:'var(--k-pe)',n:'var(--k-n)',si:'var(--k-si)'}[t]||'var(--k-gr)',lv=KLT[t].lv;
   return `<svg width="34" height="32" viewBox="0 0 34 32" aria-hidden="true"><rect x="12" y="2" width="10" height="28" rx="1" style="fill:${c};stroke:var(--dev-edge)"/>${t==='pe'?'<rect x="12" y="13" width="10" height="3" style="fill:#e5c919"/>':''}${Array.from({length:lv},(_,k)=>`<circle cx="17" cy="${6+k*5}" r="1.7" style="fill:var(--screw);stroke:var(--dev-edge);stroke-width:.5"/><circle cx="17" cy="${26-k*5}" r="1.7" style="fill:var(--screw);stroke:var(--dev-edge);stroke-width:.5"/>`).join('')}${t==='tr'?'<rect x="14" y="15" width="6" height="5" style="fill:#e07a1f"/>':''}${t==='si'?'<rect x="13.5" y="14" width="7" height="7" style="fill:#d9dde0"/>':''}</svg>`;}
-let palQ='';
+let palQ='';const palOpen=new Set(['ein']);
 function palCab(n){
   const q=palQ.toLowerCase(),hit=(...s)=>!q||s.join(' ').toLowerCase().includes(q);
   let h=`<div class="fld wide"><label for="cabq">Bauteil suchen</label><input id="cabq" type="search" value="${esc(palQ)}" placeholder="z. B. Schütz, FI, Klemme" autocomplete="off"></div>`;
@@ -1310,15 +1318,18 @@ function palCab(n){
     const parts=Object.entries(PARTS).filter(([k,d])=>d.g===g&&hit(d.n,d.s,'-'+d.pre,gn));
     const terms=g==='kl'?Object.entries(KLT).filter(([k,d])=>hit(d.n,'klemme',gn)):[];
     if(!parts.length&&!terms.length)continue;
-    h+=`<div class="ph">${gn}</div><div class="tgroup">${parts.map(([k,d])=>`<div class="tool" data-k="${k}">${partIcon(k)}<div><b>${d.n}</b><small>Kennzeichen -${d.pre}</small></div></div>`).join('')}${terms.map(([k,d])=>`<div class="tool" data-kt="${k}">${termIcon(k)}<div><b>${d.n}</b><small>${k==='pe'?'grün-gelb':k==='n'?'blau':k==='si'?'mit Sicherungshalter':k==='tr'?'mit Trennschieber':d.lv>1?d.lv+' Ebenen':'grau'}</small></div></div>`).join('')}</div>`;}
+    const open=!!q||palOpen.has(g);
+    h+=`<button class="pgh" data-pg="${g}" aria-expanded="${open}"><span>${gn}</span><small>${parts.length+terms.length}</small></button><div class="tgroup"${open?'':' hidden'}>${parts.map(([k,d])=>`<div class="tool" data-k="${k}">${partIcon(k)}<div><b>${d.n}</b><small>Kennzeichen -${d.pre}</small></div></div>`).join('')}${terms.map(([k,d])=>`<div class="tool" data-kt="${k}">${termIcon(k)}<div><b>${d.n}</b><small>${k==='pe'?'grün-gelb':k==='n'?'blau':k==='si'?'mit Sicherungshalter':k==='tr'?'mit Trennschieber':d.lv>1?d.lv+' Ebenen':'grau'}</small></div></div>`).join('')}</div>`;}
   h+=`<div class="ph">Aderfarbe</div><div class="swatches">${Object.entries(WCOL).map(([k,c])=>`<button class="sw" data-wc="${k}" aria-pressed="${st.wc===k}" title="${c.n}" aria-label="${c.n}" style="background:${c.y?`repeating-linear-gradient(45deg,${c.c} 0 5px,${c.y} 5px 10px)`:c.c}"></button>`).join('')}</div><div class="wcname">${WCOL[st.wc].n}</div>
   <div class="fld"><label for="f_mm">Querschnitt</label><div class="in"><select id="f_mm">${MM.map(m=>`<option${st.mm===m?' selected':''}>${m}</option>`).join('')}</select><span class="u">mm²</span></div></div>
-  <p class="hint">Bauteile auf eine Hutschiene ziehen. Klemmen auf eine Klemmleiste ziehen, um sie dort einzureihen, oder auf eine freie Stelle, um eine neue Leiste zu beginnen. Zum Verdrahten von Klemmstelle zu Klemmstelle ziehen.</p>`;
+  <p class="hint">Gruppe antippen zum Auf- und Zuklappen. Bauteile auf eine Hutschiene ziehen. Klemmen auf eine Klemmleiste ziehen, um sie dort einzureihen, oder auf eine freie Stelle, um eine neue Leiste zu beginnen. Zum Verdrahten von Klemmstelle zu Klemmstelle ziehen.</p>`;
   stPal.innerHTML=h;
   const qi=$('#cabq');qi.oninput=()=>{palQ=qi.value;palCab(n);const e=$('#cabq');e.focus();e.setSelectionRange(e.value.length,e.value.length);};
   const toPlate=(x,y)=>{const c=$('#cab');if(!inside(c,x,y))return null;const r=c.getBoundingClientRect(),v=st.cv;return {x:(x-r.left-v.x)/v.k,y:(y-r.top-v.y)/v.k}};
-  stPal.querySelectorAll('.tool[data-k]').forEach(el=>{const k=el.dataset.k;dragSource(el,{onTap:()=>addPart(n,k,null),onDrop:(x,y)=>{const p=toPlate(x,y);if(p)addPart(n,k,p);}});});
-  stPal.querySelectorAll('.tool[data-kt]').forEach(el=>{const t=el.dataset.kt;dragSource(el,{onTap:()=>tapTerm(n,t),onDrop:(x,y)=>{const p=toPlate(x,y);if(p)dropTerm(n,t,p);}});});
+  stPal.querySelectorAll('.pgh').forEach(b=>b.onclick=()=>{const g=b.dataset.pg;palOpen.has(g)?palOpen.delete(g):palOpen.add(g);const top=stPal.scrollTop;palCab(n);stPal.scrollTop=top;});
+  const tapHint=name=>toast('„'+name+'“ zum Einfügen in den Schrank ziehen und dort ablegen.');
+  stPal.querySelectorAll('.tool[data-k]').forEach(el=>{const k=el.dataset.k;dragSource(el,{onTap:()=>tapHint(PARTS[k].n),onDrop:(x,y)=>{const p=toPlate(x,y);if(p)addPart(n,k,p);}});});
+  stPal.querySelectorAll('.tool[data-kt]').forEach(el=>{const t=el.dataset.kt;dragSource(el,{onTap:()=>tapHint(KLT[t].n),onDrop:(x,y)=>{const p=toPlate(x,y);if(p)dropTerm(n,t,p);}});});
   stPal.querySelectorAll('.sw').forEach(b=>b.onclick=()=>{st.wc=b.dataset.wc;palCab(n);});
   $('#f_mm').onchange=e=>{st.mm=e.target.value;};
 }
